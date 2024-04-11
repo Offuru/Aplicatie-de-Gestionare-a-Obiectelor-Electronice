@@ -1,0 +1,9 @@
+﻿<Application x:Class="Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Aplicatie_de_Gestiune_a_Obiectelor_Eletronice"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>
