@@ -8,7 +8,18 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Menu">
 
-    <Grid>
-        
+    <Grid Background="#FFAEB8C2">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Width="300">
+                <Button x:Name="goToElectronicOverview" Content="Lista electronice" Margin="0, 0, 0, 60" Height="100"/>
+                <Button x:Name="goToAddElectronic" Content="Adaugare electronice" Margin="0, 0, 0, 60" Height="100"/>
+                <Button x:Name="goToCreateForm" Content="Creare formular" Height="100"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>

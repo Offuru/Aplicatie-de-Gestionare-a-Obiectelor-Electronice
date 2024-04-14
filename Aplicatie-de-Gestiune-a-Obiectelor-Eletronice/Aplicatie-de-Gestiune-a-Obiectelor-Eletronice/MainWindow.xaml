@@ -5,5 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Aplicatie_de_Gestiune_a_Obiectelor_Eletronice"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="1080" Width="1920" Background="#FFAEB8C2">
+
+    <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Source="View/Pages/Menu.xaml"/>
 </Window>
