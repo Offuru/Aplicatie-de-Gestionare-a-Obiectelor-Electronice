@@ -2,8 +2,18 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Aplicatie_de_Gestiune_a_Obiectelor_Eletronice"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <Color x:Key="BackgroundColor" A="255" R="174" G="184" B="194"/>
+            <sys:Double x:Key="PageWidth">1920</sys:Double>
+            <sys:Double x:Key="PageHeight">1080</sys:Double>
+            <sys:Double x:Key="MenuStackPanelWidht">300</sys:Double>
+            <sys:Double x:Key="MenuButtonHeight">100</sys:Double>
+            <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}"/>
+        </ResourceDictionary>
+        
     </Application.Resources>
 </Application>
+    
