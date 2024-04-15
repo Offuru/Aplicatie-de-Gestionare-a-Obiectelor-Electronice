@@ -1,4 +1,8 @@
-﻿using System.Configuration;
+﻿using Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Core;
+using Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services;
+using Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
+using System.Configuration;
 using System.Data;
 using System.Windows;
 
@@ -9,6 +13,36 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice
     /// </summary>
     public partial class App : Application
     {
+        private readonly ServiceProvider _serviceProvider;
+
+        public App()
+        {
+            IServiceCollection services = new ServiceCollection();
+
+            services.AddSingleton<MainWindow>(provider => new MainWindow
+            {
+                DataContext = provider.GetRequiredService<MainViewModel>()
+            });
+
+            services.AddSingleton<MainViewModel>();
+            services.AddSingleton<ElectronicListViewModel>();
+            services.AddSingleton<FormViewModel>();
+            services.AddSingleton<MenuViewModel>();
+            services.AddSingleton<ElectronicOverviewViewModel>();
+            services.AddSingleton<INavigationService, NavigationService>();
+
+            services.AddSingleton<Func<Type, ViewModel>>(serviceProvider => viewModelType => (ViewModel)serviceProvider.GetRequiredService(viewModelType));
+
+            _serviceProvider = services.BuildServiceProvider();
+        }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
+            mainWindow.Show();
+            base.OnStartup(e);
+        }
+
     }
 
 }

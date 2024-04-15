@@ -3,8 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Aplicatie_de_Gestiune_a_Obiectelor_Eletronice"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             StartupUri="MainWindow.xaml">
+             xmlns:viewModel="clr-namespace:Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels"
+             xmlns:view="clr-namespace:Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.View.Pages"
+             >
     <Application.Resources>
+
         <ResourceDictionary>
             <Color x:Key="BackgroundColor" A="255" R="174" G="184" B="194"/>
             <sys:Double x:Key="PageWidth">1920</sys:Double>
@@ -12,8 +15,24 @@
             <sys:Double x:Key="MenuStackPanelWidht">300</sys:Double>
             <sys:Double x:Key="MenuButtonHeight">100</sys:Double>
             <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}"/>
+
+            <DataTemplate DataType="{x:Type TypeName=viewModel:MenuViewModel}">
+                <view:Menu/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type TypeName=viewModel:ElectronicListViewModel}">
+                <view:EletronicsList/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type TypeName=viewModel:ElectronicOverviewViewModel}">
+                <view:ElectronicOverview/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type TypeName=viewModel:FormViewModel}">
+                <view:Form/>
+            </DataTemplate>
+
         </ResourceDictionary>
-        
     </Application.Resources>
 </Application>
     

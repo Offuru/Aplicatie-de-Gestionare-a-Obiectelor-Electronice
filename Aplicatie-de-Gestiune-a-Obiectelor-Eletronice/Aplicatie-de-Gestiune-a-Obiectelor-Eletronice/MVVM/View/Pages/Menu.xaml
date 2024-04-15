@@ -5,10 +5,11 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.View.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      Background="{StaticResource BackgroundBrush}"
+      d:DesignHeight="{StaticResource PageHeight}" d:DesignWidth="{StaticResource PageWidth}"
       Title="Menu">
 
-    <Grid Background="#FFAEB8C2">
+    <Grid>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
@@ -16,9 +17,20 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Width="300">
-                <Button x:Name="goToElectronicOverview" Content="Lista electronice" Margin="0, 0, 0, 60" Height="100"/>
-                <Button x:Name="goToAddElectronic" Content="Adaugare electronice" Margin="0, 0, 0, 60" Height="100"/>
-                <Button x:Name="goToCreateForm" Content="Creare formular" Height="100"/>
+                <Button x:Name="goToElectronicList" 
+                        Content="Lista electronice" 
+                        Margin="0, 0, 0, 60" 
+                        Height="100"
+                        Command="{Binding NavigateToElectronicListCommand}"/>
+                <Button x:Name="goToAddElectronic" 
+                        Content="Adaugare electronice" 
+                        Margin="0, 0, 0, 60" 
+                        Height="100"
+                        Command="{Binding NavigateToElectronicOverviewCommand}"/>
+                <Button x:Name="goToCreateForm" 
+                        Content="Creare formular" 
+                        Height="100"
+                        Command="{Binding NavigateToFormCommand}"/>
             </StackPanel>
         </Grid>
     </Grid>

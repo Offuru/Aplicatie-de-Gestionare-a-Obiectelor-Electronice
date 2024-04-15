@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
 {
-    class ViewModel
+    class ElectronicOverviewViewModel : Core.ViewModel
     {
     }
 }
