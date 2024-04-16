@@ -10,28 +10,26 @@
       Title="Menu">
 
     <Grid>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Width="300">
-                <Button x:Name="goToElectronicList" 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Width="300">
+            <Button x:Name="goToElectronicList" 
                         Content="Lista electronice" 
                         Margin="0, 0, 0, 60" 
                         Height="100"
                         Command="{Binding NavigateToElectronicListCommand}"/>
-                <Button x:Name="goToAddElectronic" 
+            <Button x:Name="goToAddElectronic" 
                         Content="Adaugare electronice" 
                         Margin="0, 0, 0, 60" 
                         Height="100"
                         Command="{Binding NavigateToElectronicOverviewCommand}"/>
-                <Button x:Name="goToCreateForm" 
+            <Button x:Name="goToCreateForm" 
                         Content="Creare formular" 
                         Height="100"
                         Command="{Binding NavigateToFormCommand}"/>
-            </StackPanel>
-        </Grid>
+        </StackPanel>
     </Grid>
 </Page>
