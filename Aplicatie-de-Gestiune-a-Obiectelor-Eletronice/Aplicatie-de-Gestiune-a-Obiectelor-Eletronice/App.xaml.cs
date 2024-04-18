@@ -15,6 +15,8 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice
     {
         private readonly ServiceProvider _serviceProvider;
 
+
+
         public App()
         {
             IServiceCollection services = new ServiceCollection();
@@ -31,6 +33,11 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice
             services.AddSingleton<ElectronicOverviewViewModel>();
             services.AddSingleton<INavigationService, NavigationService>();
 
+            services.AddSingleton<ViewModelLocator>();
+            services.AddSingleton<WindowMapper>();
+            services.AddSingleton<IWindowManager, WindowManager>();
+            services.AddSingleton<IItemsService, ItemsService>();
+
             services.AddSingleton<Func<Type, ViewModel>>(serviceProvider => viewModelType => (ViewModel)serviceProvider.GetRequiredService(viewModelType));
 
             _serviceProvider = services.BuildServiceProvider();
@@ -38,11 +45,10 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
-            mainWindow.Show();
+            var windowManager = _serviceProvider.GetRequiredService<IWindowManager>();
+            windowManager.ShowWindow(_serviceProvider.GetRequiredService<MainViewModel>());
             base.OnStartup(e);
         }
-
     }
 
 }

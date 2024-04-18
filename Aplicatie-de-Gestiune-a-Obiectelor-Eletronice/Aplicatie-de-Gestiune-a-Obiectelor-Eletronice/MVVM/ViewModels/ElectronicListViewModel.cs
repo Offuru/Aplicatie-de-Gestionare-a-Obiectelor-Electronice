@@ -11,6 +11,7 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
     class ElectronicListViewModel : Core.ViewModel
     {
         private INavigationService _navigation;
+        public IItemsService ItemsService { get; private set; }
 
         public INavigationService Navigation
         {
@@ -23,10 +24,14 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
         }
 
         public RelayCommand NavigateToMenuCommand { get; set; }
-        public ElectronicListViewModel(INavigationService navService)
+        public RelayCommand AddItemCommand { get; set; }
+
+        public ElectronicListViewModel(INavigationService navService, IItemsService itemsService)
         {
             Navigation = navService;
             NavigateToMenuCommand = new RelayCommand(o => { Navigation.NavigateTo<MenuViewModel>(); }, o => true);
+            ItemsService = itemsService;
+            AddItemCommand = new RelayCommand(o => { ItemsService.AddItems(); }, o => true);
         }
     }
 }

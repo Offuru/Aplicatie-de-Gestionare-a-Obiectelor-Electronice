@@ -99,5 +99,11 @@
 
             </DataGrid.Columns>
         </DataGrid>
+
+        <Button Content="Go back" Command="{Binding NavigateToMenuCommand}" Grid.Column="0" Grid.Row="2"/>
+
+        <Button Content="Add item" Command="{Binding AddItemCommand}" Grid.Column="2" Grid.Row="2"/>
+
+        <ListView ItemsSource="{Binding ItemsService.Items}"/>
     </Grid>
 </Page>

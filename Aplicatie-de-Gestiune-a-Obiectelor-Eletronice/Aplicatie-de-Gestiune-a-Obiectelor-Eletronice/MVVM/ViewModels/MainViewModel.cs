@@ -1,4 +1,5 @@
 ﻿using Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Core;
+using Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels;
 using Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,9 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
     class MainViewModel : Core.ViewModel
     {
         private INavigationService _navigation;
+        public IItemsService ItemsService { get; set; }
+        private readonly IWindowManager _windowManager;
+        private readonly ViewModelLocator _viewModelLocator;
 
         public INavigationService Navigation
         {
@@ -22,10 +26,14 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
             }
         }
 
-        public MainViewModel(INavigationService navService)
+        public MainViewModel(INavigationService navService, IItemsService itemsService, IWindowManager windowManager, ViewModelLocator viewModelLocator)
         {
             Navigation = navService;
             Navigation.NavigateTo<MenuViewModel>();
+
+            _viewModelLocator = viewModelLocator;
+            _windowManager = windowManager;
+            ItemsService = itemsService;
         }
     }
 }

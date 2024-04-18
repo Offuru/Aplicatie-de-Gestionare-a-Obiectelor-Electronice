@@ -31,5 +31,8 @@
                         Height="100"
                         Command="{Binding NavigateToFormCommand}"/>
         </StackPanel>
+
+        <Button Content="Add Item" Command="{Binding AddItemCommand}" Width="100" Height="100"/>
+        <ListView ItemsSource="{Binding ItemsService.Items}" Grid.Column="2"/>
     </Grid>
 </Page>
