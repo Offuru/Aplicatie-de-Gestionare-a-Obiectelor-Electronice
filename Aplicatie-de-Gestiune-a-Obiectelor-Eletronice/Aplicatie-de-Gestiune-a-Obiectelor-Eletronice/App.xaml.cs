@@ -1,6 +1,9 @@
 ﻿using Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Core;
+using Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Database;
+using Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Database.Repositories;
 using Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services;
 using Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Configuration;
 using System.Data;
@@ -21,6 +24,9 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice
         {
             IServiceCollection services = new ServiceCollection();
 
+            services.AddDbContext<DatabaseContext>();
+            services.AddScoped<DbContext, DatabaseContext>();
+            services.AddScoped<ElectronicObjectRepository>();
             services.AddSingleton<MainWindow>(provider => new MainWindow
             {
                 DataContext = provider.GetRequiredService<MainViewModel>()
