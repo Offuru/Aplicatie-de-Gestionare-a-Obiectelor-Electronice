@@ -25,7 +25,6 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
 
         public void CloseWindow()
         {
-            MessageBox.Show("closewindow");
         }
 
         public void ShowWindow(ViewModel viewModel)

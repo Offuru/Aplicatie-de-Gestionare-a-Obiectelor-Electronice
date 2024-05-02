@@ -31,7 +31,7 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
                 Type = ElectronicObject.ObjectType.Active.ToString(),
                 ActiveObjectType = ElectronicObject.ActiveType.Inventory.ToString(),
                 Code = "cod",
-                Order = 1131,
+                Order = "1131",
                 ReceiptNumber = "receipt",
                 Date = "25.04.2024",
                 Name = "obiect",

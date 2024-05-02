@@ -39,13 +39,28 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Models
         public int Id { get; set; }
         public string Type { get; set; }
         public string ActiveObjectType { get; set; }
-        public string  Code { get; set; }
-        public int Order {  get; set; }
+        public string Code { get; set; }
+        public string Order {  get; set; }
         public string ReceiptNumber { get; set; }
         public string Date {  get; set; }
         public string Name { get; set; }
         public string Serial {  get; set; }
         public string Destination { get; set; }
         public string ReceiverName { get; set; }
+
+        public ElectronicObject()
+        {
+            Id = 0;
+            Type = "";
+            ActiveObjectType = "";
+            Code = "";
+            Order = "";
+            ReceiptNumber = "";
+            Date = "";
+            Name = "";
+            Serial = "";
+            Destination = "";
+            ReceiverName = "";
+        }
     }
 }
