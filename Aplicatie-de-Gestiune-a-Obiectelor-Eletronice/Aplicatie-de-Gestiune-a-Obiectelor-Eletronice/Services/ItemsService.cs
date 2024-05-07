@@ -24,7 +24,8 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
 
         public void AddItems()
         {
-            Items.Add("Item");
+            ObjectListToWord.CreateWordFile(new List<ElectronicObject>());
+            /*Items.Add("Item");
             ObjectRepository.Add(new ElectronicObject()
             {
                 Id = 1,
@@ -38,7 +39,7 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
                 Serial = "serial",
                 Destination = ElectronicObject.Receiver.Room.ToString(),
                 ReceiverName = ElectronicObject.Classrooms[0]
-            });
+            });*/
         }
 
         public ItemsService(ElectronicObjectRepository electronicObjectRepository)
