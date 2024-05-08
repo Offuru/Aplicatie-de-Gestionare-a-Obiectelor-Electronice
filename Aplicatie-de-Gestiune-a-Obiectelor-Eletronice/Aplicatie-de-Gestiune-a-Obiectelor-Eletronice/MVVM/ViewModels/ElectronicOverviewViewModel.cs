@@ -2,9 +2,11 @@
 using Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Automation;
 
 namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
 {
@@ -75,7 +77,9 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
 
         private ElectronicObject _electronicObject;
 
-        public ElectronicObject ElectronicObject { get => _electronicObject;
+        public ElectronicObject ElectronicObject 
+        {   
+            get => _electronicObject;
             set
             {
                 _electronicObject = value;
@@ -84,11 +88,101 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
             }
         }
 
-        public ElectronicOverviewViewModel() 
+        public List<String> DestinationTypesList { get; set; }
+        public List<String> RoomsTypeList { get; set; }
+
+        private string _currentDestinationNameTBlock;
+        public string CurrentDestinationNameTBlock 
         {
-            CurrentObjectType = "Obiecte de inventar";
-            ObjectTypesList = new List<string>{ "Obiecte de inventar", "Mijloace fixe"};
+            get => _currentDestinationNameTBlock;
+            set
+            {
+                _currentDestinationNameTBlock = value;
+                OnPropertyChanged();
+            }
+        }
+       
+
+        public bool SuggestRooms {  get; set; }
+        public string CurrentDestinationType
+        {
+            get => ElectronicObject.Destination;
+            set
+            {
+                ElectronicObject.Destination = value;
+                SuggestRooms = false;
+                switch (ElectronicObject.Destination)
+                {
+                    case "Student":
+                        CurrentDestinationNameTBlock = "Nume student"; break;
+                    case "Doctorand":
+                        CurrentDestinationNameTBlock = "Nume doctorand"; break;
+                    case "Cadru didactic":
+                        CurrentDestinationNameTBlock = "Nume cadru didactic"; break;
+                    case "Sala":
+                        CurrentDestinationNameTBlock = "Denumire sala"; SuggestRooms = true; break;
+                }
+
+                OnPropertyChanged(nameof(SuggestRooms));
+            }
+        }
+
+
+        public string DestinationName
+        {
+            get
+            {
+                return ElectronicObject.ReceiverName;
+            }
+            set
+            {
+                ElectronicObject.ReceiverName = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(CurrentRoomRecomandation));
+
+            }
+        }
+
+        public string AutofillRoom
+        {
+            get => DestinationName;
+            set
+            {
+                if(Int16.TryParse(value, out _))
+                    DestinationName = _currentRoomRecomandation[Int16.Parse(value)];
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(CurrentRoomRecomandation));
+            }
+        }
+
+        private ObservableCollection<string> _currentRoomRecomandation = new ObservableCollection<string>();
+        public ObservableCollection<string> CurrentRoomRecomandation
+        {
+            get
+            {
+                _currentRoomRecomandation.Clear();
+
+                foreach (string room in RoomsTypeList)
+                {
+                    if(room.ToLower().Contains(DestinationName.ToLower()))
+                        _currentRoomRecomandation.Add(room);
+                }
+                return _currentRoomRecomandation;
+            }
+            set { _currentRoomRecomandation = value; }
+        }
+
+        public ElectronicOverviewViewModel() 
+        { 
             ElectronicObject = new ElectronicObject();
+            CurrentObjectType = "Obiecte de inventar";
+            ElectronicObject.Destination = "Student";
+            ObjectTypesList = new List<string>{ "Obiecte de inventar", "Mijloace fixe"};
+            DestinationTypesList = new List<string>{ "Student", "Doctorand", "Cadru didactic", "Sala"};
+           
+            RoomsTypeList = ElectronicObject.Classrooms;
+            AutofillRoom = "";
+            CurrentRoomRecomandation = new ObservableCollection<string>();
         }
     }
 }
