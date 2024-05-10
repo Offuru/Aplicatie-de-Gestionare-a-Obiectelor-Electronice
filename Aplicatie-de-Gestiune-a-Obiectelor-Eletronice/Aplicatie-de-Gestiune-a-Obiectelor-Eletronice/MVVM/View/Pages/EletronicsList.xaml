@@ -29,8 +29,9 @@
             AutoGenerateColumns="False"
             Grid.Column="1"
             Grid.Row="1"
-            CanUserAddRows="False">
-            <!--ItemsSource="{...}"-->
+            CanUserAddRows="False"
+            ItemsSource="{Binding ElectronicObjects}">
+            
 
             <DataGrid.Columns>
                 <DataGridTextColumn
@@ -39,63 +40,81 @@
                     Width="*"
                     IsReadOnly="True"
                     CanUserSort="False"
-                    CanUserReorder="False"/>
+                    CanUserReorder="False"
+                    Binding="{Binding Id}"
+                    />
                 <DataGridTextColumn
                     Header="Cod"
                     MinWidth="15"
                     Width="*"
                     IsReadOnly="True"
                     CanUserSort="False"
-                    CanUserReorder="False"/>
+                    CanUserReorder="False"
+                    Binding="{Binding Code}"
+                    />
                 <DataGridTextColumn
                     Header="Order"
                     MinWidth="15"
                     Width="*"
                     IsReadOnly="True"
                     CanUserSort="False"
-                    CanUserReorder="False"/>
+                    CanUserReorder="False"
+                    Binding="{Binding Order}"
+                    />
                 <DataGridTextColumn
                     Header="ReceiptNumber"
                     MinWidth="15"
                     Width="*"
                     IsReadOnly="True"
                     CanUserSort="False"
-                    CanUserReorder="False"/>
+                    CanUserReorder="False"
+                    Binding="{Binding ReceiptNumber}"
+                    />
                 <DataGridTextColumn
                     Header="Date"
                     MinWidth="15"
                     Width="*"
                     IsReadOnly="True"
                     CanUserSort="False"
-                    CanUserReorder="False"/>
+                    CanUserReorder="False"
+                    Binding="{Binding Date}"
+                    />
                 <DataGridTextColumn
                     Header="Name"
                     MinWidth="15"
                     Width="*"
                     IsReadOnly="True"
                     CanUserSort="False"
-                    CanUserReorder="False"/>
+                    CanUserReorder="False"
+                    Binding="{Binding Name}"
+                    />
                 <DataGridTextColumn
                     Header="Serial"
                     MinWidth="15"
                     Width="*"
                     IsReadOnly="True"
                     CanUserSort="False"
-                    CanUserReorder="False"/>
+                    CanUserReorder="False"
+                    Binding="{Binding Serial}"
+                    />
                 <DataGridTextColumn
                     Header="Destination"
                     MinWidth="15"
                     Width="*"
                     IsReadOnly="True"
                     CanUserSort="False"
-                    CanUserReorder="False"/>
+                    CanUserReorder="False"
+                    Binding="{Binding Destination}"
+                    />
                 <DataGridTextColumn
                     Header="ReceiverName"
                     MinWidth="15"
                     Width="*"
                     IsReadOnly="True"
                     CanUserSort="False"
-                    CanUserReorder="False"/>
+                    CanUserReorder="False"
+                    Binding="{Binding ReceiverName}"
+                    />
 
             </DataGrid.Columns>
         </DataGrid>
@@ -104,6 +123,6 @@
 
         <Button Content="Add item" Command="{Binding AddItemCommand}" Grid.Column="2" Grid.Row="2"/>
 
-        <ListView ItemsSource="{Binding ItemsService.Items}"/>
+        <Button Content="Refresh table" Command="{Binding RefreshTableCommand}" Grid.Column="0" Grid.Row="0"/>
     </Grid>
 </Page>

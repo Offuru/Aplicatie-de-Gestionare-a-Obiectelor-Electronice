@@ -144,9 +144,9 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
 
             range.ListFormat.RemoveNumbers();
             range.InsertAfter("F01 – PS 6.6-01/ed. 1, rev.0");
-            
 
-            document.Save();
+            try { document.Save(); }
+            catch (Exception ex) { }
         }
     }
 }
