@@ -2,6 +2,7 @@
 using Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240509110904_migrare1")]
+    partial class migrare1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,7 +74,7 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ElectronicObjects");
+                    b.ToTable("ElectronicObject");
                 });
 #pragma warning restore 612, 618
         }

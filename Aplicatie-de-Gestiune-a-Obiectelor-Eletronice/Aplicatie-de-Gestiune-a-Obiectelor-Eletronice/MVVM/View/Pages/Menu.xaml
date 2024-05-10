@@ -20,16 +20,19 @@
                         Content="Lista electronice" 
                         Margin="0, 0, 0, 60" 
                         Height="100"
-                        Command="{Binding NavigateToElectronicListCommand}"/>
+                        Command="{Binding NavigateToElectronicListCommand}"
+                        FontSize="20"/>
             <Button x:Name="goToAddElectronic" 
                         Content="Adaugare electronice" 
                         Margin="0, 0, 0, 60" 
                         Height="100"
-                        Command="{Binding NavigateToElectronicOverviewCommand}"/>
+                        Command="{Binding NavigateToElectronicOverviewCommand}"
+                        FontSize="20"/>
             <Button x:Name="goToCreateForm" 
                         Content="Creare formular" 
                         Height="100"
-                        Command="{Binding NavigateToFormCommand}"/>
+                        Command="{Binding NavigateToFormCommand}"
+                        FontSize="20"/>
         </StackPanel>
 
         <Button Content="Add Item" Command="{Binding AddItemCommand}" Width="100" Height="100"/>

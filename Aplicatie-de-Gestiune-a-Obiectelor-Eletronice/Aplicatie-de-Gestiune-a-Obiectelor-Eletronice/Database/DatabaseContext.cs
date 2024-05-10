@@ -10,7 +10,7 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Database
 {
     public class DatabaseContext : DbContext
     {
-        public List<ElectronicObject> ElectronicObjects { get; set; }
+        public DbSet<ElectronicObject> ElectronicObjects { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

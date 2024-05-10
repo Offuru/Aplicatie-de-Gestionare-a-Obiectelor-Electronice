@@ -1,5 +1,6 @@
 ﻿using Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Core;
 using Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Models;
+using Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -57,14 +58,13 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
             }
         }
 
-        private string _currentObjectType { get; set; }
         public string CurrentObjectType 
         {
-            get => _currentObjectType;
+            get => ElectronicObject.ActiveObjectType;
             set
             {
-                _currentObjectType = value;
-                if(_currentObjectType == "Obiecte de inventar")
+                ElectronicObject.ActiveObjectType = value;
+                if(ElectronicObject.ActiveObjectType == "Obiecte de inventar")
                     ObjectType = true;
                 else
                     ObjectType = false;
@@ -123,6 +123,7 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
                         CurrentDestinationNameTBlock = "Denumire sala"; SuggestRooms = true; break;
                 }
 
+                OnPropertyChanged();
                 OnPropertyChanged(nameof(SuggestRooms));
             }
         }
@@ -172,17 +173,118 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
             set { _currentRoomRecomandation = value; }
         }
 
-        public ElectronicOverviewViewModel() 
-        { 
+        private INavigationService _navigation;
+        public IItemsService ItemsService { get; private set; }
+
+        public INavigationService Navigation
+        {
+            get => _navigation;
+            set
+            {
+                _navigation = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string ObjectCode
+        {
+            get => ElectronicObject.Code;
+            set
+            {
+                ElectronicObject.Code = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string ObjectOrder
+        {
+            get => ElectronicObject.Order;
+            set
+            {
+                ElectronicObject.Order = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string ObjectReceiptNumber
+        {
+            get => ElectronicObject.ReceiptNumber;
+            set
+            {
+                ElectronicObject.ReceiptNumber = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string ObjectDate
+        {
+            get => ElectronicObject.Date;
+            set
+            {
+                ElectronicObject.Date = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string ObjectName
+        {
+            get => ElectronicObject.Name;
+            set
+            {
+                ElectronicObject.Name = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string ObjectSerial
+        {
+            get => ElectronicObject.Serial;
+            set
+            {
+                ElectronicObject.Serial = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public RelayCommand SaveCommand { get; set; }
+        public RelayCommand NavigateToMenuCommand { get; set; }
+
+        private void ResetFields()
+        {
             ElectronicObject = new ElectronicObject();
             CurrentObjectType = "Obiecte de inventar";
-            ElectronicObject.Destination = "Student";
+            CurrentDestinationType = "Student";
+            AutofillRoom = "";
+            DestinationName = "";
+            ObjectCode = "";
+            ObjectDate = "";
+            ObjectName = "";
+            ObjectSerial = "";
+            ObjectOrder = "";
+            ObjectReceiptNumber = "";
+        }
+
+        public ElectronicOverviewViewModel(INavigationService navService, IItemsService itemsService) 
+        {
+            Navigation = navService;
+            ItemsService = itemsService;
+
+            ElectronicObject = new ElectronicObject();
+            CurrentObjectType = "Obiecte de inventar";
+            CurrentDestinationNameTBlock = "Nume student";
             ObjectTypesList = new List<string>{ "Obiecte de inventar", "Mijloace fixe"};
             DestinationTypesList = new List<string>{ "Student", "Doctorand", "Cadru didactic", "Sala"};
-           
+
             RoomsTypeList = ElectronicObject.Classrooms;
             AutofillRoom = "";
             CurrentRoomRecomandation = new ObservableCollection<string>();
+
+
+            NavigateToMenuCommand = new RelayCommand(o => { Navigation.NavigateTo<MenuViewModel>(); }, o => true);
+            SaveCommand = new RelayCommand(o => { 
+                if (ItemsService.AddItems(ElectronicObject))
+                    ResetFields();  
+            }, o => true);
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,9 +36,12 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Models
 
         public static List<string> Classrooms = new List<string>
         { "PI1", "PI2", "PII1","PII2","PII3","PII4","PII5","PII6",
-            "PII7","PIII1", "PIII2", "PIII4", "alta" };
+            "PII7","PIII1", "PIII2", "PIII4" };
 
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
         public string Type { get; set; }
         public string ActiveObjectType { get; set; }
         public string Code { get; set; }
@@ -50,16 +55,15 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Models
 
         public ElectronicObject()
         {
-            Id = 0;
-            Type = "";
-            ActiveObjectType = "";
+            Type = "Activ";
+            ActiveObjectType = "Obiecte de inventar";
             Code = "";
             Order = "";
             ReceiptNumber = "";
             Date = "";
             Name = "";
             Serial = "";
-            Destination = "";
+            Destination = "Student";
             ReceiverName = "";
         }
     }

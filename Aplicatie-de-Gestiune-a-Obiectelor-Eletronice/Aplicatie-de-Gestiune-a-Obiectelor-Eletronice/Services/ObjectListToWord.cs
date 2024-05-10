@@ -34,7 +34,7 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
 
             Word.Range range = document.Range(ref start, ref end);
 
-            range.InsertBefore("\nMinisterul  Educației\nUniversitatea Transilvania din Brașov");
+            range.InsertBefore("\nMinisterul Educației\nUniversitatea Transilvania din Brașov");
             range.Font.Name = "Calibri";
             range.Font.Size = 11;
             range.InsertParagraphAfter();

@@ -35,21 +35,21 @@
             <TextBlock Text="Tip obiect" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="0, 0, 0, 10"/>
             <ComboBox ItemsSource="{Binding ObjectTypesList}" SelectedItem="{Binding CurrentObjectType}" Width="300" Height="30" Margin="0, 0, 0, 30" FontSize="20"/>
             <TextBlock Text="{Binding CodeName}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="0, 0, 0, 10"/>
-            <TextBox Name="CodeTBox" Text="{Binding ElectronicObject.Code}" Width="300" Height="30"  Margin="0, 0, 0, 30" FontSize="20"/>
+            <TextBox Name="CodeTBox" Text="{Binding ObjectCode}" Width="300" Height="30"  Margin="0, 0, 0, 30" FontSize="20"/>
             <TextBlock Text="{Binding OrderName}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="0, 0, 0, 10"/>
-            <custom:DigitsTextBox x:Name="OrderTBox" Text="{Binding ElectronicObject.Order}" Width="300" Height="30"  Margin="0, 0, 0, 30" FontSize="20"/>
+            <custom:DigitsTextBox x:Name="OrderTBox" Text="{Binding ObjectOrder}" Width="300" Height="30"  Margin="0, 0, 0, 30" FontSize="20"/>
         </StackPanel>
 
 
         <StackPanel Grid.Column="3" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
             <TextBlock Text="Numar bon miscare" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="0, 0, 0, 10"/>
-            <TextBox Name="ReceiptNoTBox" Width="300" Height="30"  Margin="0, 0, 0, 30" FontSize="20"/>
+            <TextBox Name="ReceiptNoTBox" Text="{Binding ObjectReceiptNumber}" Width="300" Height="30"  Margin="0, 0, 0, 30" FontSize="20"/>
             <TextBlock Text="Data intrarii" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="0, 0, 0, 10"/>
-            <TextBox Name="DateTBox" Width="300" Height="30"  Margin="0, 0, 0, 30" FontSize="20"/>
+            <TextBox Name="DateTBox" Text="{Binding ObjectDate}" Width="300" Height="30"  Margin="0, 0, 0, 30" FontSize="20"/>
             <TextBlock Text="Denumire obiect" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="0, 0, 0, 10"/>
-            <TextBox Name="NameTBox"  Width="300" Height="30"  Margin="0, 0, 0, 30" FontSize="20"/>
+            <TextBox Name="NameTBox" Text="{Binding ObjectName}"  Width="300" Height="30"  Margin="0, 0, 0, 30" FontSize="20"/>
             <TextBlock Text="Serie unica obiect" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="0, 0, 0, 10"/>
-            <TextBox Name="SerialTBox" Width="300" Height="30"  Margin="0, 0, 0, 30" FontSize="20"/>
+            <TextBox Name="SerialTBox" Text="{Binding ObjectSerial}" Width="300" Height="30"  Margin="0, 0, 0, 30" FontSize="20"/>
         </StackPanel>
 
         <StackPanel Grid.Column="5" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -83,6 +83,7 @@ PlacementTarget="{Binding ElementName=tb}">
             
         </StackPanel>
 
-        <Button Content="Salveaza" Grid.Column="3" Grid.Row="2" Width="200" Height="100" FontSize="20"/>
+        <Button Content="Inapoi" Command="{Binding NavigateToMenuCommand}" Grid.Column="1" Grid.Row="2" Width="200" Height="100" FontSize="20" />
+        <Button Content="Salveaza" Command="{Binding SaveCommand}" Grid.Column="3" Grid.Row="2" Width="200" Height="100" FontSize="20"/>
     </Grid>
 </Page>
