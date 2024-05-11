@@ -1,4 +1,5 @@
 ﻿using Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Core;
+using Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Database.Repositories;
 using Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Models;
 using Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services;
 using System;
@@ -7,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
 
@@ -14,131 +16,32 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
 {
     class ElectronicOverviewViewModel : Core.ViewModel
     {
+        private INavigationService _navigation;
+        public ItemsService ItemsService { get; set; }
 
-        private string _codeName;
-        public string CodeName 
+        public INavigationService Navigation
         {
-            get => _codeName;
+            get => _navigation;
             set
             {
-                _codeName = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _orderName;
-        public string OrderName 
-        {
-            get => _orderName;
-            set
-            {
-                _orderName = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool _objectType;
-        public bool ObjectType
-        {
-            get => _objectType;
-            set
-            {
-                _objectType = value;
-                if(value)
-                {
-                    CodeName = "Cod NO";
-                    OrderName = "Numar inventar";
-                }
-                else
-                {
-                    CodeName = "Cod INV";
-                    OrderName = "Numar mijloc fix";
-                }
-                OnPropertyChanged();
-
-            }
-        }
-
-        public string CurrentObjectType 
-        {
-            get => ElectronicObject.ActiveObjectType;
-            set
-            {
-                ElectronicObject.ActiveObjectType = value;
-                if(ElectronicObject.ActiveObjectType == "Obiecte de inventar")
-                    ObjectType = true;
-                else
-                    ObjectType = false;
-
+                _navigation = value;
                 OnPropertyChanged();
             }
         }
 
         public List<String> ObjectTypesList { get; set; }
-
-        private ElectronicObject _electronicObject;
-
-        public ElectronicObject ElectronicObject 
-        {   
-            get => _electronicObject;
-            set
-            {
-                _electronicObject = value;
-                _electronicObject.Order = new string(_electronicObject.Order.Where(c => char.IsDigit(c)).ToArray());
-                OnPropertyChanged(nameof(_electronicObject.Order));
-            }
-        }
-
         public List<String> DestinationTypesList { get; set; }
         public List<String> RoomsTypeList { get; set; }
-
-        private string _currentDestinationNameTBlock;
-        public string CurrentDestinationNameTBlock 
-        {
-            get => _currentDestinationNameTBlock;
-            set
-            {
-                _currentDestinationNameTBlock = value;
-                OnPropertyChanged();
-            }
-        }
-       
-
-        public bool SuggestRooms {  get; set; }
-        public string CurrentDestinationType
-        {
-            get => ElectronicObject.Destination;
-            set
-            {
-                ElectronicObject.Destination = value;
-                SuggestRooms = false;
-                switch (ElectronicObject.Destination)
-                {
-                    case "Student":
-                        CurrentDestinationNameTBlock = "Nume student"; break;
-                    case "Doctorand":
-                        CurrentDestinationNameTBlock = "Nume doctorand"; break;
-                    case "Cadru didactic":
-                        CurrentDestinationNameTBlock = "Nume cadru didactic"; break;
-                    case "Sala":
-                        CurrentDestinationNameTBlock = "Denumire sala"; SuggestRooms = true; break;
-                }
-
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(SuggestRooms));
-            }
-        }
-
 
         public string DestinationName
         {
             get
             {
-                return ElectronicObject.ReceiverName;
+                return ItemsService.ElectronicObject.ReceiverName;
             }
             set
             {
-                ElectronicObject.ReceiverName = value;
+                ItemsService.ElectronicObject.ReceiverName = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(CurrentRoomRecomandation));
 
@@ -150,7 +53,7 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
             get => DestinationName;
             set
             {
-                if(Int16.TryParse(value, out _))
+                if (Int16.TryParse(value, out _))
                     DestinationName = _currentRoomRecomandation[Int16.Parse(value)];
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(CurrentRoomRecomandation));
@@ -166,7 +69,7 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
 
                 foreach (string room in RoomsTypeList)
                 {
-                    if(room.Contains(DestinationName, StringComparison.OrdinalIgnoreCase))
+                    if (room.Contains(DestinationName, StringComparison.OrdinalIgnoreCase))
                         _currentRoomRecomandation.Add(room);
                 }
                 return _currentRoomRecomandation;
@@ -174,87 +77,76 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
             set { _currentRoomRecomandation = value; }
         }
 
-        private INavigationService _navigation;
-        public IItemsService ItemsService { get; private set; }
-
-        public INavigationService Navigation
-        {
-            get => _navigation;
-            set
-            {
-                _navigation = value;
-                OnPropertyChanged();
-            }
-        }
-
         public string ObjectCode
         {
-            get => ElectronicObject.Code;
+            get => ItemsService.ElectronicObject.Code;
             set
             {
-                ElectronicObject.Code = value;
+                ItemsService.ElectronicObject.Code = value;
                 OnPropertyChanged();
             }
         }
 
         public string ObjectOrder
         {
-            get => ElectronicObject.Order;
+            get => ItemsService.ElectronicObject.Order;
             set
             {
-                ElectronicObject.Order = value;
+                ItemsService.ElectronicObject.Order = value;
                 OnPropertyChanged();
             }
         }
 
         public string ObjectReceiptNumber
         {
-            get => ElectronicObject.ReceiptNumber;
+            get => ItemsService.ElectronicObject.ReceiptNumber;
             set
             {
-                ElectronicObject.ReceiptNumber = value;
+                ItemsService.ElectronicObject.ReceiptNumber = value;
                 OnPropertyChanged();
             }
         }
 
         public string ObjectDate
         {
-            get => ElectronicObject.Date;
+            get => ItemsService.ElectronicObject.Date;
             set
             {
-                ElectronicObject.Date = value;
+                ItemsService.ElectronicObject.Date = value;
                 OnPropertyChanged();
             }
         }
 
         public string ObjectName
         {
-            get => ElectronicObject.Name;
+            get => ItemsService.ElectronicObject.Name;
             set
             {
-                ElectronicObject.Name = value;
+                ItemsService.ElectronicObject.Name = value;
                 OnPropertyChanged();
             }
         }
 
         public string ObjectSerial
         {
-            get => ElectronicObject.Serial;
+            get => ItemsService.ElectronicObject.Serial;
             set
             {
-                ElectronicObject.Serial = value;
+                ItemsService.ElectronicObject.Serial = value;
                 OnPropertyChanged();
             }
         }
 
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand NavigateToMenuCommand { get; set; }
+        public RelayCommand NavigateToListCommand { get; set; }
+        public RelayCommand UpdateCommand { get; set; }
+        public RelayCommand DeleteCommand { get; set; }
 
         private void ResetFields()
         {
-            ElectronicObject = new ElectronicObject();
-            CurrentObjectType = "Obiecte de inventar";
-            CurrentDestinationType = "Student";
+            ItemsService.CurrentObjectType = "Obiecte de inventar";
+            ItemsService.CurrentDestinationType = "Student";
             AutofillRoom = "";
             DestinationName = "";
             ObjectCode = "";
@@ -265,16 +157,16 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
             ObjectReceiptNumber = "";
         }
 
-        public ElectronicOverviewViewModel(INavigationService navService, IItemsService itemsService) 
+        public ElectronicOverviewViewModel(INavigationService navService, IItemsService itemsService
+            , ElectronicObjectRepository electronicObjectRepository)
         {
             Navigation = navService;
-            ItemsService = itemsService;
+            ItemsService = itemsService as ItemsService;
 
-            ElectronicObject = new ElectronicObject();
-            CurrentObjectType = "Obiecte de inventar";
-            CurrentDestinationNameTBlock = "Nume student";
-            ObjectTypesList = new List<string>{ "Obiecte de inventar", "Mijloace fixe"};
-            DestinationTypesList = new List<string>{ "Student", "Doctorand", "Cadru didactic", "Sala"};
+            ItemsService.CurrentObjectType = "Obiecte de inventar";
+            ItemsService.CurrentDestinationNameTBlock = "Nume student";
+            ObjectTypesList = new List<string> { "Obiecte de inventar", "Mijloace fixe" };
+            DestinationTypesList = new List<string> { "Student", "Doctorand", "Cadru didactic", "Sala" };
 
             RoomsTypeList = ElectronicObject.Classrooms;
             AutofillRoom = "";
@@ -282,9 +174,33 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
 
 
             NavigateToMenuCommand = new RelayCommand(o => { Navigation.NavigateTo<MenuViewModel>(); }, o => true);
-            SaveCommand = new RelayCommand(o => { 
-                if (ItemsService.AddItems(ElectronicObject))
-                    ResetFields();  
+            SaveCommand = new RelayCommand(o =>
+            {
+                if (ItemsService.AddItems(ItemsService.ElectronicObject))
+                    ResetFields();
+            }, o => true);
+
+            NavigateToListCommand = new RelayCommand(o => { ItemsService.SelectedObjectToEdit = null; Navigation.NavigateTo<ElectronicListViewModel>(); }, o => true);
+            UpdateCommand = new RelayCommand(o =>
+            {
+                if(ItemsService.CheckInput())
+                {
+                    if(electronicObjectRepository.UpdateById(ItemsService.ElectronicObject))
+                        MessageBox.Show("Obiect actualizat cu succes");
+                    else
+                        MessageBox.Show("Obiectul nu a putut fi actualizat");
+                    ItemsService.RefreshItems();
+                    Navigation.NavigateTo<ElectronicListViewModel>();
+                }
+            }, o => true);
+            DeleteCommand = new RelayCommand(o =>
+            {
+                if(electronicObjectRepository.DeleteById(ItemsService.ElectronicObject.Id))
+                    MessageBox.Show("Obiect sters cu succes");
+                else
+                    MessageBox.Show("Obiectul nu a putut fi sters");
+                ItemsService.RefreshItems();
+                Navigation.NavigateTo<ElectronicListViewModel>();
             }, o => true);
         }
     }

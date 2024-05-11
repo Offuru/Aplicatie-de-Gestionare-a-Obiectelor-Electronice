@@ -69,6 +69,7 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Models
 
         public ElectronicObject(ElectronicObject obj)
         {
+            Id = obj.Id;
             Type = obj.Type;
             ActiveObjectType = obj.ActiveObjectType;
             Code = obj.Code;

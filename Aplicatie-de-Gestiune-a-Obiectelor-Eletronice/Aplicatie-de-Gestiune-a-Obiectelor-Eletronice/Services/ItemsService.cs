@@ -17,17 +17,201 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
 {
     public interface IItemsService
     {
+
         bool AddItems(ElectronicObject obj);
         void AddItems();
         void CreateForm();
         void MarkItems();
         void UnMarkItems();
+        void ProposeCasare();
+        void Casare();
     }
 
-    internal class ItemsService : Core.ViewModel, IItemsService
+    class ItemsService : Core.ViewModel, IItemsService
     {
         ElectronicObjectRepository ObjectRepository { get; set; }
         public ObservableCollection<ElectronicObjectDataGridCheckBox> Items { get; set; }
+        
+        private ElectronicObject _electronicObject;
+        public ElectronicObject ElectronicObject
+        {
+            get => _electronicObject;
+            set
+            {
+                _electronicObject = value;
+                _electronicObject.Order = new string(_electronicObject.Order.Where(c => char.IsDigit(c)).ToArray());
+                OnPropertyChanged();
+                CurrentObjectType = _electronicObject.ActiveObjectType;
+                CurrentDestinationType = _electronicObject.Destination;
+            }
+        }
+
+        private ElectronicObject? _selectedObjectToEdit;
+        public ElectronicObject? SelectedObjectToEdit
+        {
+            get => _selectedObjectToEdit;
+            set
+            {
+                _selectedObjectToEdit = value;
+                if (value != null)
+                { 
+                    ElectronicObject = value; 
+                }
+                OnPropertyChanged();
+            }
+        }
+
+        private string _codeName;
+        public string CodeName
+        {
+            get => _codeName;
+            set
+            {
+                _codeName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _orderName;
+        public string OrderName
+        {
+            get => _orderName;
+            set
+            {
+                _orderName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool _objectType;
+        public bool ObjectType
+        {
+            get => _objectType;
+            set
+            {
+                _objectType = value;
+                if (value)
+                {
+                    CodeName = "Cod NO";
+                    OrderName = "Numar inventar";
+                }
+                else
+                {
+                    CodeName = "Cod INV";
+                    OrderName = "Numar mijloc fix";
+                }
+                OnPropertyChanged();
+
+            }
+        }
+
+        public string CurrentObjectType
+        {
+            get => ElectronicObject.ActiveObjectType;
+            set
+            {
+                ElectronicObject.ActiveObjectType = value;
+                if (ElectronicObject.ActiveObjectType == "Obiecte de inventar")
+                    ObjectType = true;
+                else
+                    ObjectType = false;
+
+                OnPropertyChanged();
+            }
+        }
+
+        private string _currentDestinationNameTBlock;
+        public string CurrentDestinationNameTBlock
+        {
+            get => _currentDestinationNameTBlock;
+            set
+            {
+                _currentDestinationNameTBlock = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        public bool SuggestRooms { get; set; }
+        public string CurrentDestinationType
+        {
+            get => ElectronicObject.Destination;
+            set
+            {
+                ElectronicObject.Destination = value;
+                SuggestRooms = false;
+                switch (ElectronicObject.Destination)
+                {
+                    case "Student":
+                        CurrentDestinationNameTBlock = "Nume student"; break;
+                    case "Doctorand":
+                        CurrentDestinationNameTBlock = "Nume doctorand"; break;
+                    case "Cadru didactic":
+                        CurrentDestinationNameTBlock = "Nume cadru didactic"; break;
+                    case "Sala":
+                        CurrentDestinationNameTBlock = "Denumire sala"; SuggestRooms = true; break;
+                }
+
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(SuggestRooms));
+            }
+        }
+
+        private Visibility _editingObject;
+        private Visibility _addingObject;
+
+        public Visibility EditingObject
+        {
+            get => _editingObject;
+            set
+            {
+                _editingObject = value;
+                if(value == Visibility.Visible)
+                {
+                    _addingObject = Visibility.Hidden;
+                }
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(AddingObject));
+            }
+        }
+
+        public Visibility AddingObject
+        {
+            get => _addingObject;
+            set
+            {
+                _addingObject = value;
+                if (value == Visibility.Visible)
+                {
+                    _editingObject = Visibility.Hidden;
+                }
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(EditingObject));
+            }
+        }
+
+
+        private Visibility _visibilityCasareProposal;
+        public Visibility VisibilityCasareProposal
+        {
+            get => _visibilityCasareProposal;
+            set
+            {
+                _visibilityCasareProposal = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility _visibilityCasare;
+        public Visibility VisibilityCasare
+        {
+            get => _visibilityCasare;
+            set
+            {
+                _visibilityCasare = value;
+                OnPropertyChanged();
+            }
+        }
 
         private string _currentObjectTypeSearchFilter;
         public string CurrentObjectTypeSearchFilter
@@ -36,13 +220,26 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
             set
             {
                 _currentObjectTypeSearchFilter = value;
-                if(value == "Fara filtru")
+
+                VisibilityCasareProposal = Visibility.Collapsed;
+                VisibilityCasare = Visibility.Collapsed;
+                if (value == "Fara filtru")
                 {
                     ShowMarkForRemoval = Visibility.Hidden;
                 }
                 else
                 {
                     ShowMarkForRemoval = Visibility.Visible;
+                    if(value == "Activ")
+                    {
+                        VisibilityCasareProposal = Visibility.Visible;
+                        VisibilityCasare = Visibility.Collapsed;
+                    }
+                    else if (value == "Propus pentru casare")
+                    {
+                        VisibilityCasareProposal = Visibility.Collapsed;
+                        VisibilityCasare = Visibility.Visible;
+                    }
                 }
                 UnMarkItems();
                 OnPropertyChanged(nameof(CurrentObjectRecommendation));
@@ -107,59 +304,68 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
             }
         }
 
-        public bool AddItems(ElectronicObject obj)
+        public bool CheckInput()
         {
-            if(obj.ActiveObjectType == "")
+            if (ElectronicObject.ActiveObjectType == "")
             {
                 MessageBox.Show("Tipul obiectului nu poate fi necompletat");
                 return false;
             }
-            if(obj.Code == "")
+            if (ElectronicObject.Code == "")
             {
                 MessageBox.Show("Codul nu poate fi necompletat");
                 return false;
             }
-            if (obj.Order == "")
+            if (ElectronicObject.Order == "")
             {
                 MessageBox.Show("Numarul de inventar/mijloc fix nu poate fi necompletat");
                 return false;
             }
-            if (obj.ReceiptNumber == "")
+            if (ElectronicObject.ReceiptNumber == "")
             {
                 MessageBox.Show("Numarul de bon miscare nu poate fi necompletat");
                 return false;
             }
-            if (obj.Date == "" || !DateTime.TryParse(obj.Date, out _))
+            if (ElectronicObject.Date == "" || !DateTime.TryParse(ElectronicObject.Date, out _))
             {
                 MessageBox.Show("Data este invalida");
                 return false;
             }
-            if (obj.Name == "")
+            if (ElectronicObject.Name == "")
             {
                 MessageBox.Show("Denumirea obiectului nu poate fi necompletata");
                 return false;
             }
-            if(obj.Serial == "")
+            if (ElectronicObject.Serial == "")
             {
                 MessageBox.Show("Seria unica a obiectului nu poate fi necompletata");
                 return false;
             }
-            if (obj.Destination == "")
+            if (ElectronicObject.Destination == "")
             {
                 MessageBox.Show("Destinatia obiectului nu poate fi necompletata");
                 return false;
             }
-            if (obj.ReceiverName == "")
+            if (ElectronicObject.ReceiverName == "")
             {
                 MessageBox.Show("Numele destinatarului nu poate fi necompletat");
                 return false;
             }
 
-            obj.Date = DateTime.Parse(obj.Date).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
-            ObjectRepository.Add(obj);
+            return true;
+        }
+
+        public bool AddItems(ElectronicObject obj)
+        {
+            if (!CheckInput())
+                return false;
+
+            ElectronicObject.Date = DateTime.Parse(ElectronicObject.Date).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+            ObjectRepository.Add(ElectronicObject);
 
             MessageBox.Show("Obiect salvat cu succes");
             RefreshItems();
+            ElectronicObject = new ElectronicObject();
             return true;
         }
 
@@ -177,17 +383,35 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
             else
                 type = "Casat";
 
+            string destination;
+            random = rand.Next(0, 100);
+            if (random % 4 == 0)
+                destination = "Student";
+            else if (random % 4 == 1)
+                destination = "Doctorand";
+            else if (random % 4 == 2)
+                destination = "Cadru didactic";
+            else
+                destination = "Sala";
+
+            random = rand.Next(0, 100);
+            string activeobjtype;
+            if (random % 2 == 0)
+                activeobjtype = "Obiecte de inventar";
+            else
+                activeobjtype = "Mijloace fixe";
+
             ObjectRepository.Add(new ElectronicObject()
             {
                 Type = type,
-                ActiveObjectType = ElectronicObject.ActiveType.Inventory.ToString(),
-                Code = "cod",
-                Order = "1131",
-                ReceiptNumber = "receipt",
-                Date = "25.04.2024",
+                ActiveObjectType = activeobjtype,
+                Code = rand.Next(1000,10000).ToString(),
+                Order = rand.Next(1000, 10000).ToString(),
+                ReceiptNumber = rand.Next(1000, 10000000).ToString(),
+                Date = "25/04/2024",
                 Name = "obiect",
-                Serial = "serial",
-                Destination = ElectronicObject.Receiver.Room.ToString(),
+                Serial = rand.Next(1000, 10000).ToString(),
+                Destination = destination,
                 ReceiverName = ElectronicObject.Classrooms[0]
             });
 
@@ -227,6 +451,36 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
             OnPropertyChanged(nameof(CurrentObjectRecommendation));
         }
 
+        public void ProposeCasare()
+        {
+            foreach(var obj in CurrentObjectRecommendation)
+            {
+                if(obj.MarkObjectForRemoval)
+                {
+                    obj.MarkObjectForRemoval = false;
+                    obj.Type = "Propus pentru casare";
+                    ObjectRepository.UpdateById(obj as ElectronicObject);
+                }
+            }
+
+            RefreshItems();
+        }
+
+        public void Casare()
+        {
+            foreach (var obj in CurrentObjectRecommendation)
+            {
+                if (obj.MarkObjectForRemoval)
+                {
+                    obj.MarkObjectForRemoval = false;
+                    obj.Type = "Casat";
+                    ObjectRepository.UpdateById(obj as ElectronicObject);
+                }
+            }
+
+            RefreshItems();
+        }
+
         public ItemsService(ElectronicObjectRepository electronicObjectRepository)
         {
             ObjectRepository = electronicObjectRepository;
@@ -237,6 +491,10 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
             CurrentObjectTypeSearchFilter = "Fara filtru";
             CurrentObjectRecommendation = Items;
             ShowMarkForRemoval = Visibility.Hidden;
+            ElectronicObject = new ElectronicObject();
+            SelectedObjectToEdit = null;
+            VisibilityCasareProposal = Visibility.Collapsed;
+            VisibilityCasare = Visibility.Collapsed;
         }
     }
 }
