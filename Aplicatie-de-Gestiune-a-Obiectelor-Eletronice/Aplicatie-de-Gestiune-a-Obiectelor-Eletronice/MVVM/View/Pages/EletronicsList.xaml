@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.View.Pages"
+      xmlns:local="clr-namespace:Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.View.Pages" xmlns:local1="clr-namespace:Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Controls"
       mc:Ignorable="d" 
       Background="{StaticResource BackgroundBrush}"
       d:DesignHeight="{StaticResource PageHeight}" d:DesignWidth="{StaticResource PageWidth}"
@@ -11,38 +11,71 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.2*"/>
+            <ColumnDefinition Width="0.1*"/>
             <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="0.2*"/>
+            <ColumnDefinition Width="0.1*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="0.2*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="0.2*"/>
-            
         </Grid.RowDefinitions>
 
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1">
+
+            <TextBox Text="{Binding ItemsService.CurrentSearchInput, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource placeHolder}" Tag="Cautare..." Width="400" Height="30" FontSize="20"/>
+
+            <ComboBox Width="180" Margin="10, 0, 0, 0" ItemsSource="{Binding ItemsService.ObjectTypeSearchFilters}" SelectedItem="{Binding ItemsService.CurrentObjectTypeSearchFilter}" FontSize="15" Height="30"/>
+        </StackPanel >
+
+        <StackPanel Visibility="{Binding ItemsService.ShowMarkForRemoval}" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1">
+            <Button Width="140" Height="30" Content="Selecteaza tot" Command="{Binding MarkObjects}" FontSize="15" />
+            <Button Width="140" Height="30" Content="Deselecteaza tot" Command="{Binding UnMarkObjects}" FontSize="15"  Margin="10, 0, 0, 0"/>
+        </StackPanel>
+
+
+
+        <FrameworkElement x:Name="FrameWorkElementProxy" Visibility="{Binding ItemsService.ShowMarkForRemoval}"/>
         <DataGrid
             x:Name="ElectronicOverview"
-            IsReadOnly="True"
             AutoGenerateColumns="False"
             Grid.Column="1"
-            Grid.Row="1"
+            Grid.Row="2"
             CanUserAddRows="False"
-            ItemsSource="{Binding ElectronicObjects}">
-            
+            FontSize="15"
+            ItemsSource="{Binding ItemsService.CurrentObjectRecommendation}">
 
             <DataGrid.Columns>
+                <DataGridCheckBoxColumn
+                    Header="Selectare obiect"
+                    MinWidth="5"
+                    Width="*"
+                    CanUserSort="False"
+                    CanUserReorder="False"
+                    Visibility="{Binding DataContext.ItemsService.ShowMarkForRemoval, Source={x:Reference Name=FrameWorkElementProxy}}"
+                    Binding="{Binding MarkObjectForRemoval}"
+                    
+                    />  
                 <DataGridTextColumn
-                    Header="ID"
+                    Header="Status obiect"
                     MinWidth="5"
                     Width="*"
                     IsReadOnly="True"
                     CanUserSort="False"
                     CanUserReorder="False"
-                    Binding="{Binding Id}"
+                    Binding="{Binding Type}"
                     />
+                <DataGridTextColumn
+                    Header="Tip obiect"
+                    MinWidth="15"
+                    Width="*"
+                    IsReadOnly="True"
+                    CanUserSort="False"
+                    CanUserReorder="False"
+                    Binding="{Binding ActiveObjectType}"
+                    />      
                 <DataGridTextColumn
                     Header="Cod"
                     MinWidth="15"
@@ -53,7 +86,7 @@
                     Binding="{Binding Code}"
                     />
                 <DataGridTextColumn
-                    Header="Order"
+                    Header="Numar"
                     MinWidth="15"
                     Width="*"
                     IsReadOnly="True"
@@ -62,7 +95,7 @@
                     Binding="{Binding Order}"
                     />
                 <DataGridTextColumn
-                    Header="ReceiptNumber"
+                    Header="Nr bon miscare"
                     MinWidth="15"
                     Width="*"
                     IsReadOnly="True"
@@ -71,7 +104,7 @@
                     Binding="{Binding ReceiptNumber}"
                     />
                 <DataGridTextColumn
-                    Header="Date"
+                    Header="Data"
                     MinWidth="15"
                     Width="*"
                     IsReadOnly="True"
@@ -80,7 +113,7 @@
                     Binding="{Binding Date}"
                     />
                 <DataGridTextColumn
-                    Header="Name"
+                    Header="Denumire obiect"
                     MinWidth="15"
                     Width="*"
                     IsReadOnly="True"
@@ -89,7 +122,7 @@
                     Binding="{Binding Name}"
                     />
                 <DataGridTextColumn
-                    Header="Serial"
+                    Header="Serie unica obiect"
                     MinWidth="15"
                     Width="*"
                     IsReadOnly="True"
@@ -98,7 +131,7 @@
                     Binding="{Binding Serial}"
                     />
                 <DataGridTextColumn
-                    Header="Destination"
+                    Header="Tip destinatie"
                     MinWidth="15"
                     Width="*"
                     IsReadOnly="True"
@@ -107,7 +140,7 @@
                     Binding="{Binding Destination}"
                     />
                 <DataGridTextColumn
-                    Header="ReceiverName"
+                    Header="Nume destinatar"
                     MinWidth="15"
                     Width="*"
                     IsReadOnly="True"
@@ -119,10 +152,8 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button Content="Go back" Command="{Binding NavigateToMenuCommand}" Grid.Column="0" Grid.Row="2"/>
+        <Button Content="Go back" Command="{Binding NavigateToMenuCommand}" Grid.Column="0" Grid.Row="3"/>
 
-        <Button Content="Add item" Command="{Binding AddItemCommand}" Grid.Column="2" Grid.Row="2"/>
-
-        <Button Content="Refresh table" Command="{Binding RefreshTableCommand}" Grid.Column="0" Grid.Row="0"/>
+        <Button Content="Add item" Command="{Binding AddItemCommand}" Grid.Column="2" Grid.Row="3"/>
     </Grid>
 </Page>

@@ -26,23 +26,11 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
             }
         }
 
-
         public ElectronicObjectRepository ObjectRepository { get; set; }
         public RelayCommand NavigateToMenuCommand { get; set; }
         public RelayCommand AddItemCommand { get; set; }
-        public RelayCommand RefreshTableCommand { get; set; }
-
-        public ObservableCollection<ElectronicObject> ElectronicObjects{ get; set; }
-
-        void RefreshTable()
-        {
-            ElectronicObjects.Clear();
-
-            foreach(var obj in ObjectRepository.GetAll())
-            {
-                ElectronicObjects.Add(obj);
-            }
-        }
+        public RelayCommand MarkObjects {  get; set; }
+        public RelayCommand UnMarkObjects {  get; set; }
 
         public ElectronicListViewModel(INavigationService navService, IItemsService itemsService
             , ElectronicObjectRepository electronicObjectRepository)
@@ -51,11 +39,10 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
             NavigateToMenuCommand = new RelayCommand(o => { Navigation.NavigateTo<MenuViewModel>(); }, o => true);
             ItemsService = itemsService;
             AddItemCommand = new RelayCommand(o => { ItemsService.AddItems(); }, o => true);
-            RefreshTableCommand = new RelayCommand(o => { RefreshTable(); }, o => true);
             ObjectRepository = electronicObjectRepository;
+            MarkObjects = new RelayCommand(o => { ItemsService.MarkItems(); }, o => true);
+            UnMarkObjects = new RelayCommand(o => { ItemsService.UnMarkItems(); }, o => true);
 
-            ElectronicObjects = new ObservableCollection<ElectronicObject>();
-            RefreshTable();
         }
     }
 }

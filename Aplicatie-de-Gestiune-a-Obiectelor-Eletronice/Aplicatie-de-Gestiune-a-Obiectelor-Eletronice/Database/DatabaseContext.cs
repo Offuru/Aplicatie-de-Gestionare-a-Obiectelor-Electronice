@@ -15,7 +15,7 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Database
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
-                .UseNpgsql("Host=localhost;Database=casare_obiecte;Username=postgres;Password=1q2w3e");
+                .UseNpgsql("Host=localhost;Database=casare_obiecte;Username=postgres;Password=1q2w3e;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -66,5 +66,19 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Models
             Destination = "Student";
             ReceiverName = "";
         }
+
+        public ElectronicObject(ElectronicObject obj)
+        {
+            Type = obj.Type;
+            ActiveObjectType = obj.ActiveObjectType;
+            Code = obj.Code;
+            Order = obj.Order;
+            ReceiptNumber = obj.ReceiptNumber;
+            Date = obj.Date;
+            Name = obj.Name;
+            Serial = obj.Serial;
+            Destination = obj.Destination;
+            ReceiverName = obj.ReceiverName;
+        }
     }
 }

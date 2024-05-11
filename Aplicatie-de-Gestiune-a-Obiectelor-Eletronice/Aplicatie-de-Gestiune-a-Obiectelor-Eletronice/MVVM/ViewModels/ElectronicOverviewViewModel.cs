@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Automation;
+using System.Windows.Controls;
 
 namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
 {
@@ -165,7 +166,7 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
 
                 foreach (string room in RoomsTypeList)
                 {
-                    if(room.ToLower().Contains(DestinationName.ToLower()))
+                    if(room.Contains(DestinationName, StringComparison.OrdinalIgnoreCase))
                         _currentRoomRecomandation.Add(room);
                 }
                 return _currentRoomRecomandation;

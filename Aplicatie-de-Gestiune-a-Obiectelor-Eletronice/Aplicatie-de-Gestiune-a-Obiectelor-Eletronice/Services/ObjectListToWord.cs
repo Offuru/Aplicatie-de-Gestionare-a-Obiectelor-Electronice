@@ -89,13 +89,16 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
             tbl.Cell(1, 11).Merge(tbl.Cell(1, 12));
             tbl.Cell(1, 11).Range.Text = "Nume, prenume, semnătură utilizator";
 
+            int currentItem = 1;
             foreach (var electronicObject in electronicObjects)
             {
                 tbl.Rows.Add(ref missing);
-                tbl.Rows.Last.Cells[1].Range.Text = electronicObject.Id.ToString();
+                tbl.Rows.Last.Cells[1].Range.Text = currentItem.ToString();
                 tbl.Rows.Last.Cells[2].Range.Text = electronicObject.Code + "/" + electronicObject.Order;
                 tbl.Rows.Last.Cells[3].Range.Text = electronicObject.Name;
                 tbl.Rows.Last.Cells[8].Range.Text = electronicObject.Date;
+
+                ++currentItem;
             }
 
             range.SetRange(range.End, range.End);
