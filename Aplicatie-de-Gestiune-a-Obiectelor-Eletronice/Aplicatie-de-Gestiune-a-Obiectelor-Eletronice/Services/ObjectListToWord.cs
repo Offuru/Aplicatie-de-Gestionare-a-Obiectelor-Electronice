@@ -90,14 +90,23 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
             tbl.Cell(1, 11).Range.Text = "Nume, prenume, semnătură utilizator";
 
             int currentItem = 1;
+            double totalSum = 0;
             foreach (var electronicObject in electronicObjects)
             {
                 tbl.Rows.Add(ref missing);
                 tbl.Rows.Last.Cells[1].Range.Text = currentItem.ToString();
                 tbl.Rows.Last.Cells[2].Range.Text = electronicObject.Code + "/" + electronicObject.Order;
                 tbl.Rows.Last.Cells[3].Range.Text = electronicObject.Name;
+                tbl.Rows.Last.Cells[4].Range.Text = "Bucată";
+                tbl.Rows.Last.Cells[5].Range.Text = "1";
+                tbl.Rows.Last.Cells[6].Range.Text = electronicObject.Price;
+                tbl.Rows.Last.Cells[7].Range.Text = electronicObject.Price;
+                tbl.Rows.Last.Cells[10].Range.Text = "Defect";
+
+
                 tbl.Rows.Last.Cells[8].Range.Text = electronicObject.Date;
 
+                totalSum += double.Parse(electronicObject.Price);
                 ++currentItem;
             }
 
@@ -109,7 +118,7 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
             range.Font.Size = 11;
             range.SetRange(range.End, range.End);
 
-            range.InsertBefore("Total valoare:\n");
+            range.InsertBefore($"Total valoare: {Math.Round(totalSum, 3)}\n");
             range.Font.Size = 12;
             range.Font.Bold = 1;
             range.Font.Underline = Word.WdUnderline.wdUnderlineSingle;

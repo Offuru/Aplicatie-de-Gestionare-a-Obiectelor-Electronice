@@ -11,31 +11,30 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.1*"/>
             <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="0.1*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Width="300">
-            <Button x:Name="goToElectronicList" 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.3*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Gestiunea obiectelor electronice" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="40"/>
+
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Width="300">
+            <Button Style="{StaticResource RoundButton}" x:Name="goToElectronicList" 
                         Content="Lista electronice" 
                         Margin="0, 0, 0, 60" 
                         Height="100"
                         Command="{Binding NavigateToElectronicListCommand}"
                         FontSize="20"/>
-            <Button x:Name="goToAddElectronic" 
-                        Content="Adaugare electronice" 
-                        Margin="0, 0, 0, 60" 
+            <Button Style="{StaticResource RoundButton}" x:Name="goToAddElectronic" 
+                        Content="Adaugare electronice"
                         Height="100"
                         Command="{Binding NavigateToElectronicOverviewCommand}"
                         FontSize="20"/>
-            <Button x:Name="goToCreateForm" 
-                        Content="Creare formular" 
-                        Height="100"
-                        Command="{Binding NavigateToFormCommand}"
-                        FontSize="20"/>
         </StackPanel>
-
-        <Button Content="Add Item" Command="{Binding AddItemCommand}" Width="100" Height="100"/>
-        <ListView ItemsSource="{Binding ItemsService.Items}" Grid.Column="2"/>
     </Grid>
 </Page>

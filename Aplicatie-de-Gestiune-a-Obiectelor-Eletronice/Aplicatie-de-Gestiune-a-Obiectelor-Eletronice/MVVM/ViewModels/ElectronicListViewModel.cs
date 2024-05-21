@@ -15,7 +15,7 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
     class ElectronicListViewModel : Core.ViewModel
     {
         private INavigationService _navigation;
-        public IItemsService ItemsService { get; private set; }
+        public ItemsService ItemsService { get; private set; }
 
         public INavigationService Navigation
         {
@@ -35,31 +35,36 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
         public RelayCommand EditObject { get; set; }
         public RelayCommand CasareProposalCommand { get; set; }
         public RelayCommand CasareCommand { get; set; }
+        public RelayCommand RevertToActiveCommand { get; set; }
+        public RelayCommand RevertToCasareProposalCommand { get; set; }
+        public RelayCommand CreateForm { get; set; }
+        public RelayCommand ViewObject { get; set; }
 
         public ElectronicListViewModel(INavigationService navService, IItemsService itemsService
             , ElectronicObjectRepository electronicObjectRepository)
         {
             Navigation = navService;
             NavigateToMenuCommand = new RelayCommand(o => { Navigation.NavigateTo<MenuViewModel>(); }, o => true);
-            ItemsService = itemsService;
+            ItemsService = itemsService as ItemsService;
             AddItemCommand = new RelayCommand(o => { ItemsService.AddItems(); }, o => true);
             ObjectRepository = electronicObjectRepository;
             MarkObjects = new RelayCommand(o => { ItemsService.MarkItems(); }, o => true);
             UnMarkObjects = new RelayCommand(o => { ItemsService.UnMarkItems(); }, o => true);
-            EditObject = new RelayCommand(o =>
+            CasareProposalCommand = new RelayCommand(o => { ItemsService.ProposeCasare(); }, o => true);
+            RevertToCasareProposalCommand = new RelayCommand(o => { ItemsService.ProposeCasare(); }, o => true);
+            RevertToActiveCommand = new RelayCommand(o => { ItemsService.Active(); }, o => true);
+            CasareCommand = new RelayCommand(o => { ItemsService.Casare(); }, o => true);
+            CreateForm = new RelayCommand(o => { ItemsService.CreateForm(); }, obj => true);
+            ViewObject = new RelayCommand(o =>
             {
-                if ((ItemsService as ItemsService).SelectedObjectToEdit != null)
+                if (ItemsService.SelectedObjectToEdit != null)
                 {
-                    (ItemsService as ItemsService).EditingObject = System.Windows.Visibility.Visible;
+                    ItemsService.EditingObject = System.Windows.Visibility.Visible;
+                    ItemsService.ElectronicObject = ItemsService.SelectedObjectToEdit;
+                    OnPropertyChanged(nameof(ItemsService.CurrentObjectType));
                     Navigation.NavigateTo<ElectronicOverviewViewModel>();
                 }
-                else
-                {
-                    MessageBox.Show("Nu a fost selectat niciun obiect pentru a fi modificat");
-                }
-            }, o => true);
-            CasareProposalCommand = new RelayCommand(o => { ItemsService.ProposeCasare(); }, o => true);
-            CasareCommand = new RelayCommand(o => { ItemsService.Casare(); }, o => true);
+            }, obj => true);
         }
     }
 }

@@ -5,6 +5,7 @@ using Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -107,12 +108,12 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
             }
         }
 
-        public string ObjectDate
+        public DateTime ObjectDate
         {
-            get => ItemsService.ElectronicObject.Date;
+            get => DateTime.ParseExact(ItemsService.ElectronicObject.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             set
             {
-                ItemsService.ElectronicObject.Date = value;
+                ItemsService.ElectronicObject.Date = value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
                 OnPropertyChanged();
             }
         }
@@ -137,6 +138,16 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
             }
         }
 
+        public string ObjectPrice
+        {
+            get => ItemsService.ElectronicObject.Price;
+            set
+            {
+                ItemsService.ElectronicObject.Price = value;
+                OnPropertyChanged();
+            }
+        }
+
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand NavigateToMenuCommand { get; set; }
         public RelayCommand NavigateToListCommand { get; set; }
@@ -150,11 +161,12 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
             AutofillRoom = "";
             DestinationName = "";
             ObjectCode = "";
-            ObjectDate = "";
+            ObjectDate = DateTime.Now;
             ObjectName = "";
             ObjectSerial = "";
             ObjectOrder = "";
             ObjectReceiptNumber = "";
+            ObjectPrice = "";
         }
 
         public ElectronicOverviewViewModel(INavigationService navService, IItemsService itemsService
@@ -163,8 +175,6 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
             Navigation = navService;
             ItemsService = itemsService as ItemsService;
 
-            ItemsService.CurrentObjectType = "Obiecte de inventar";
-            ItemsService.CurrentDestinationNameTBlock = "Nume student";
             ObjectTypesList = new List<string> { "Obiecte de inventar", "Mijloace fixe" };
             DestinationTypesList = new List<string> { "Student", "Doctorand", "Cadru didactic", "Sala" };
 
@@ -173,34 +183,73 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
             CurrentRoomRecomandation = new ObservableCollection<string>();
 
 
-            NavigateToMenuCommand = new RelayCommand(o => { Navigation.NavigateTo<MenuViewModel>(); }, o => true);
+            NavigateToMenuCommand = new RelayCommand(o =>
+            {
+                Navigation.NavigateTo<MenuViewModel>();
+            }
+            , o => true);
             SaveCommand = new RelayCommand(o =>
             {
-                if (ItemsService.AddItems(ItemsService.ElectronicObject))
+                if (ItemsService.AddItem())
                     ResetFields();
             }, o => true);
 
-            NavigateToListCommand = new RelayCommand(o => { ItemsService.SelectedObjectToEdit = null; Navigation.NavigateTo<ElectronicListViewModel>(); }, o => true);
+            NavigateToListCommand = new RelayCommand(o => 
+            {
+                if (ItemsService.EditingObject == Visibility.Visible)
+                {
+                    if (!ItemsService.ObjectRepository.GetById(ItemsService.ElectronicObject.Id).Equals(ItemsService.ElectronicObject))
+                    {
+                        var Result = MessageBox.Show("Salvarile nu vor fi modificate. Continuati?", "Salvare modificari", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                        if (Result == MessageBoxResult.No)
+                            return;
+                    }
+                }
+                ItemsService.SelectedObjectToEdit = null; 
+                Navigation.NavigateTo<ElectronicListViewModel>(); 
+            }, o => true);
             UpdateCommand = new RelayCommand(o =>
             {
-                if(ItemsService.CheckInput())
+                var Result = MessageBox.Show("Obiectul va fi actualizat. Continuati?", "Actualizare obiect", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (Result == MessageBoxResult.Yes)
                 {
-                    if(electronicObjectRepository.UpdateById(ItemsService.ElectronicObject))
-                        MessageBox.Show("Obiect actualizat cu succes");
-                    else
-                        MessageBox.Show("Obiectul nu a putut fi actualizat");
-                    ItemsService.RefreshItems();
-                    Navigation.NavigateTo<ElectronicListViewModel>();
+                    if (ItemsService.CheckInput())
+                    {
+                        if (electronicObjectRepository.UpdateById(ItemsService.ElectronicObject))
+                        {
+                            MessageBox.Show("Obiect actualizat cu succes.");
+                            var found = ItemsService.Items.FirstOrDefault(obj => obj.Id == ItemsService.ElectronicObject.Id);
+                            if (found != null)
+                            {
+                                found.Copy(ItemsService.ElectronicObject);
+                                OnPropertyChanged(nameof(ItemsService.CurrentObjectRecommendation));
+                            }
+                        }
+                        else
+                            MessageBox.Show("Obiectul nu a putut fi actualizat.");
+                        Navigation.NavigateTo<ElectronicListViewModel>();
+                    }
                 }
             }, o => true);
             DeleteCommand = new RelayCommand(o =>
             {
-                if(electronicObjectRepository.DeleteById(ItemsService.ElectronicObject.Id))
-                    MessageBox.Show("Obiect sters cu succes");
-                else
-                    MessageBox.Show("Obiectul nu a putut fi sters");
-                ItemsService.RefreshItems();
-                Navigation.NavigateTo<ElectronicListViewModel>();
+                var Result = MessageBox.Show("Obiectul va fi sters. Continuati?", "Stergere obiect", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (Result == MessageBoxResult.Yes)
+                {
+                    if (electronicObjectRepository.DeleteById(ItemsService.ElectronicObject.Id))
+                    {
+                        MessageBox.Show("Obiect sters cu succes.");
+                        var found = ItemsService.Items.FirstOrDefault(obj => obj.Id == ItemsService.ElectronicObject.Id);
+                        if (found != null)
+                        {
+                            ItemsService.Items.Remove(found);
+                            OnPropertyChanged(nameof(ItemsService.CurrentObjectRecommendation));
+                        }
+                    }
+                    else
+                        MessageBox.Show("Obiectul nu a putut fi sters.");
+                    Navigation.NavigateTo<ElectronicListViewModel>();
+                }
             }, o => true);
         }
     }

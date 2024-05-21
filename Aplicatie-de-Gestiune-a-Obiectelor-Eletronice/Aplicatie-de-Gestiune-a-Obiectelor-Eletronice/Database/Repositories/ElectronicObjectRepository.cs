@@ -70,8 +70,9 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Database.Repositories
 
             if (itemToRemove != null)
             {
-                DbContext.ElectronicObjects.Remove(itemToRemove);
+                itemToRemove.Active = false;
                 DbContext.SaveChanges();
+
                 return true;
             }
 

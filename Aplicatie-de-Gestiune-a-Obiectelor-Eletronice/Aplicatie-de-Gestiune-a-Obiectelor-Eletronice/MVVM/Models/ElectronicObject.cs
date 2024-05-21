@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Models
 {
-    public class ElectronicObject
+    public class ElectronicObject : IEquatable<ElectronicObject>
     {
         public enum ObjectType
         {
@@ -52,6 +52,41 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Models
         public string Serial {  get; set; }
         public string Destination { get; set; }
         public string ReceiverName { get; set; }
+        public string Price {  get; set; }
+
+        public bool Active {  get; set; }
+        public void Copy(ElectronicObject obj)
+        {
+            Id = obj.Id;
+            Type = obj.Type;
+            ActiveObjectType = obj.ActiveObjectType;
+            Code = obj.Code;
+            Order = obj.Order;
+            ReceiptNumber = obj.ReceiptNumber;
+            Date = obj.Date;
+            Name = obj.Name;
+            Serial = obj.Serial;
+            Destination = obj.Destination;
+            ReceiverName = obj.ReceiverName;
+            Active = obj.Active;
+            Price = obj.Price;
+        }
+
+        public bool Equals(ElectronicObject? other)
+        {
+            return Id == other.Id &&
+                Type == other.Type &&
+                ActiveObjectType == other.ActiveObjectType &&
+                Code == other.Code &&
+                Order == other.Order &&
+                ReceiptNumber == other.ReceiptNumber &&
+                Date == other.Date &&
+                Name == other.Name &&
+                Serial == other.Serial &&
+                Destination == other.Destination &&
+                ReceiverName == other.ReceiverName &&
+                Active == other.Active;
+        }
 
         public ElectronicObject()
         {
@@ -60,11 +95,13 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Models
             Code = "";
             Order = "";
             ReceiptNumber = "";
-            Date = "";
+            Date = DateTime.Now.ToString("dd/MM/yyyy");
             Name = "";
             Serial = "";
             Destination = "Student";
             ReceiverName = "";
+            Active = true;
+            Price = "";
         }
 
         public ElectronicObject(ElectronicObject obj)
@@ -80,6 +117,10 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Models
             Serial = obj.Serial;
             Destination = obj.Destination;
             ReceiverName = obj.ReceiverName;
+            Active = obj.Active;
+            Price = obj.Price;
         }
+
+        
     }
 }

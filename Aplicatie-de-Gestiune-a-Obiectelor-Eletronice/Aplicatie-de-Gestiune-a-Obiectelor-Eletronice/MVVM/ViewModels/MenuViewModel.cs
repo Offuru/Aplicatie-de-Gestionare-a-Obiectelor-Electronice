@@ -34,12 +34,11 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
         {
             Navigation = navService;
             ItemsService = itemsService;
-            AddItemCommand = new RelayCommand(o => { ItemsService.AddItems(); }, o => true);
             NavigateToElectronicOverviewCommand = new RelayCommand(o => { (ItemsService as ItemsService).ElectronicObject = new Models.ElectronicObject();
                 (ItemsService as ItemsService).AddingObject = System.Windows.Visibility.Visible;
                 Navigation.NavigateTo<ElectronicOverviewViewModel>(); }, o => true);
             NavigateToElectronicListCommand = new RelayCommand(o => { (ItemsService as ItemsService).SelectedObjectToEdit = null; Navigation.NavigateTo<ElectronicListViewModel>(); }, o => true);
-            NavigateToFormCommand = new RelayCommand(o => { ItemsService.CreateForm(); }, obj => true);
+
             /* NavigateToFormCommand = new RelayCommand(o => { Navigation.NavigateTo<FormViewModel>(); }, obj => true);*/
         }
     }
