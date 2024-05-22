@@ -202,7 +202,7 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
                 {
                     if (!ItemsService.ObjectRepository.GetById(ItemsService.ElectronicObject.Id).Equals(ItemsService.ElectronicObject))
                     {
-                        var Result = MessageBox.Show("Salvarile nu vor fi modificate. Continuati?", "Salvare modificari", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                        var Result = MessageBox.Show("Modificarile nu vor fi salvate. Continuati?", "Salvare modificari", MessageBoxButton.YesNo, MessageBoxImage.Question);
                         if (Result == MessageBoxResult.No)
                             return;
                     }
