@@ -32,6 +32,11 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice
                 DataContext = provider.GetRequiredService<MainViewModel>()
             });
 
+            using (DbContext dbContext = new DatabaseContext())
+            {
+                dbContext.Database.Migrate();
+            }
+
             services.AddSingleton<MainViewModel>();
             services.AddSingleton<ElectronicListViewModel>();
             services.AddSingleton<FormViewModel>();
