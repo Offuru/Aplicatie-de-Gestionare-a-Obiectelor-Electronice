@@ -85,7 +85,9 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Models
                 Serial == other.Serial &&
                 Destination == other.Destination &&
                 ReceiverName == other.ReceiverName &&
-                Active == other.Active;
+                Active == other.Active &&
+                Price == other.Price;
+
         }
 
         public ElectronicObject()

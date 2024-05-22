@@ -136,8 +136,22 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
             }
         }
 
+        private bool _suggestRooms;
+        public bool SuggestRooms 
+        {
+            get => _suggestRooms;
+            set
+            {
+                _suggestRooms = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(NoSuggestRooms));
+            }
+        }
 
-        public bool SuggestRooms { get; set; }
+        public bool NoSuggestRooms
+        {
+            get => !SuggestRooms;
+        }
         public string CurrentDestinationType
         {
             get => ElectronicObject.Destination;
@@ -397,7 +411,7 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
             ObjectRepository.Add(ElectronicObject);
 
             MessageBox.Show("Obiect salvat cu succes.");
-            Items.Add(new ElectronicObjectDataGridCheckBox(ElectronicObject));
+            RefreshItems();
             ElectronicObject = new ElectronicObject();
             return true;
         }
