@@ -138,7 +138,7 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
         }
 
         private bool _suggestRooms;
-        public bool SuggestRooms 
+        public bool SuggestRooms
         {
             get => _suggestRooms;
             set
@@ -368,7 +368,7 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
                 MessageBox.Show("Numarul de bon miscare nu poate fi necompletat.");
                 return false;
             }
-            if (ElectronicObject.Date == "" || !DateTime.TryParseExact(ElectronicObject.Date,formats,CultureInfo.InvariantCulture,DateTimeStyles.None, out _))
+            if (ElectronicObject.Date == "" || !DateTime.TryParseExact(ElectronicObject.Date, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
             {
                 MessageBox.Show("Data este invalida.");
                 return false;
