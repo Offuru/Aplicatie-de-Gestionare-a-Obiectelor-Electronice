@@ -33,33 +33,33 @@
 
 
         <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <ui:TextBlock Text="Tip obiect" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0, 0, 0, 10" FontSize="20"/>
+            <ui:TextBlock Foreground="{StaticResource TextboxFontColor}" Text="Tip obiect" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0, 0, 0, 10" FontSize="20"/>
             <ComboBox ItemsSource="{Binding ObjectTypesList}" SelectedItem="{Binding ItemsService.CurrentObjectType}" Width="300" Margin="0, 0, 0, 30"/>
-            <ui:TextBlock Text="{Binding ItemsService.CodeName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="0, 0, 0, 10"/>
+            <ui:TextBlock Foreground="{StaticResource TextboxFontColor}" Text="{Binding ItemsService.CodeName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="0, 0, 0, 10"/>
             <ui:TextBox PlaceholderText="{Binding ItemsService.CodeName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Name="CodeTBox" Text="{Binding ObjectCode}" Width="300"  Margin="0, 0, 0, 30"/>
-            <ui:TextBlock Text="{Binding ItemsService.OrderName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="0, 0, 0, 10"/>
+            <ui:TextBlock Foreground="{StaticResource TextboxFontColor}" Text="{Binding ItemsService.OrderName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="0, 0, 0, 10"/>
             <ui:TextBox x:Name="OrderTBox" Text="{Binding ObjectOrder, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" PlaceholderText="{Binding ItemsService.OrderName}" Width="300" Margin="0, 0, 0, 30"/>
-            <ui:TextBlock Text="Serie unica obiect" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="0, 0, 0, 10"/>
+            <ui:TextBlock Foreground="{StaticResource TextboxFontColor}" Text="Serie unica obiect" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="0, 0, 0, 10"/>
             <ui:TextBox Name="SerialTBox" Text="{Binding ObjectSerial, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" PlaceholderText="Serie unica obiect" Width="300" Margin="0, 0, 0, 30"/>
         </StackPanel>
 
 
         <StackPanel Grid.Column="3" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <ui:TextBlock Text="Numar bon miscare" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0, 0, 0, 10" FontSize="20"/>
+            <ui:TextBlock Foreground="{StaticResource TextboxFontColor}" Text="Numar bon miscare" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0, 0, 0, 10" FontSize="20"/>
             <ui:TextBox Name="ReceiptNoTBox" Text="{Binding ObjectReceiptNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" PlaceholderText="Numar bon miscare" Width="300" Margin="0, 0, 0, 30"/>
-            <ui:TextBlock Text="Data intrarii" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0, 0, 0, 10" FontSize="20"/>
+            <ui:TextBlock Foreground="{StaticResource TextboxFontColor}" Text="Data intrarii" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0, 0, 0, 10" FontSize="20"/>
             <!--<TextBox Name="DateTBox" Text="{Binding ObjectDate}" Style="{StaticResource placeHolder}" Tag="Data intrarii" Width="300" Height="30"  Margin="0, 0, 0, 30" FontSize="20"/>-->
             <DatePicker HorizontalAlignment="Stretch" SelectedDate="{Binding ObjectDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Name="datePicker1" Width="300" Margin="0, 0, 0, 30"/>
-            <ui:TextBlock Text="Denumire obiect" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0, 0, 0, 10" FontSize="20"/>
+            <ui:TextBlock Foreground="{StaticResource TextboxFontColor}" Text="Denumire obiect" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0, 0, 0, 10" FontSize="20"/>
             <ui:TextBox Name="NameTBox" Text="{Binding ObjectName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" PlaceholderText="Denumire obiect"  Width="300" Margin="0, 0, 0, 30"/>
-            <ui:TextBlock Text="Pret obiect" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0, 0, 0, 10" FontSize="20"/>
+            <ui:TextBlock Foreground="{StaticResource TextboxFontColor}" Text="Pret obiect" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0, 0, 0, 10" FontSize="20"/>
             <ui:NumberBox x:Name="PriceTBox" Text="{Binding ObjectPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" PlaceholderText="Pret obiect" Width="300" Margin="0, 0, 0, 30" SpinButtonPlacementMode="Compact"/>
         </StackPanel>
 
         <StackPanel Grid.Column="5" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <ui:TextBlock Text="Tip destinatie" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="0, 0, 0, 10"/>
+            <ui:TextBlock Foreground="{StaticResource TextboxFontColor}" Text="Tip destinatie" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="0, 0, 0, 10"/>
             <ComboBox ItemsSource="{Binding DestinationTypesList}" SelectedItem="{Binding ItemsService.CurrentDestinationType}" Width="300" Margin="0, 0, 0, 30"/>
-            <ui:TextBlock Text="{Binding ItemsService.CurrentDestinationNameTBlock}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="0, 0, 0, 10"/>
+            <ui:TextBlock Foreground="{StaticResource TextboxFontColor}" Text="{Binding ItemsService.CurrentDestinationNameTBlock}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="0, 0, 0, 10"/>
             <!--<TextBox x:Name="tb" Text="{Binding DestinationName, UpdateSourceTrigger=PropertyChanged}" Width="300"  Margin="0, 0, 0, 30" FontSize="20"/>
             <Popup Width="{Binding RelativeSource={RelativeSource Self},
                 Path=PlacementTarget.ActualWidth}"
@@ -85,11 +85,11 @@ PlacementTarget="{Binding ElementName=tb}">
             <ui:AutoSuggestBox Text="{Binding DestinationName,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UpdateTextOnSelect="True" PlaceholderText="{Binding ItemsService.CurrentDestinationNameTBlock}" Visibility="{Binding ItemsService.SuggestRooms, Converter={StaticResource BoolToVis}}" OriginalItemsSource="{Binding CurrentRoomRecomandation, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
 
-        <ui:Button Content="Inapoi" Command="{Binding NavigateToMenuCommand}" Visibility="{Binding ItemsService.AddingObject}" Grid.Column="1" Grid.Row="3"  VerticalAlignment="Center" HorizontalAlignment="Center" Background="#f3f3f3" Width="150" Height="40"/>
-        <ui:Button Content="Salveaza" Command="{Binding SaveCommand}" Visibility="{Binding ItemsService.AddingObject}" Grid.Column="3" Grid.Row="3"  VerticalAlignment="Center" HorizontalAlignment="Center" Background="#f3f3f3"  Width="150" Height="40"/>
-        <ui:TextBlock Text="Adaugare obiect" Visibility="{Binding ItemsService.AddingObject}" Grid.Column="3" Grid.Row="0" FontSize="40" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <ui:Button Content="Inapoi" Command="{Binding NavigateToMenuCommand}" Visibility="{Binding ItemsService.AddingObject}" Grid.Column="1" Grid.Row="3"  VerticalAlignment="Center" HorizontalAlignment="Center" Background="{StaticResource ButtonColor}" Width="150" Height="40"/>
+        <ui:Button Content="Salveaza" Command="{Binding SaveCommand}" Visibility="{Binding ItemsService.AddingObject}" Grid.Column="3" Grid.Row="3"  VerticalAlignment="Center" HorizontalAlignment="Center" Background="{StaticResource ButtonColor}"  Width="150" Height="40"/>
+        <ui:TextBlock Foreground="{StaticResource TextboxFontColor}" Text="Adaugare obiect" Visibility="{Binding ItemsService.AddingObject}" Grid.Column="3" Grid.Row="0" FontSize="40" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
-        <ui:TextBlock Text="Editare obiect"  Visibility="{Binding ItemsService.EditingObject}" Grid.Column="3" Grid.Row="0" FontSize="40" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <ui:TextBlock Foreground="{StaticResource TextboxFontColor}" Text="Editare obiect"  Visibility="{Binding ItemsService.EditingObject}" Grid.Column="3" Grid.Row="0" FontSize="40" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <ui:Button Content="Inapoi" Command="{Binding NavigateToListCommand}" Visibility="{Binding ItemsService.EditingObject}" Grid.Column="1" Grid.Row="3"  Width="150" Height="40" VerticalAlignment="Center" HorizontalAlignment="Center" Background="#f3f3f3"/>
         <ui:Button Content="Actualizare" Command="{Binding UpdateCommand}" Visibility="{Binding ItemsService.EditingObject}" Grid.Column="3" Grid.Row="3"  Width="150" Height="40" VerticalAlignment="Center" HorizontalAlignment="Center" Background="#f3f3f3"/>
         <ui:Button Content="Stergere" Command="{Binding DeleteCommand}" Visibility="{Binding ItemsService.EditingObject}" Grid.Column="5" Grid.Row="3" Width="150" Height="40" VerticalAlignment="Center" HorizontalAlignment="Center" Background="#f3f3f3"/>

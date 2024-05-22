@@ -33,7 +33,7 @@
             <RowDefinition Height="0.2*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Lista obiecte" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40"/>
+        <TextBlock Foreground="{StaticResource TextboxFontColor}" Text="Lista obiecte" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40"/>
 
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1">
 
@@ -43,12 +43,12 @@
         </StackPanel >
 
         <StackPanel Visibility="{Binding ItemsService.ShowMarkForRemoval}" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1">
-            <ui:Button Content="Selecteaza tot" Command="{Binding MarkObjects}" FontSize="15" Background="#f3f3f3">
+            <ui:Button Content="Selecteaza tot" Command="{Binding MarkObjects}" FontSize="15" Background="{StaticResource ButtonColor}">
                 <ui:Button.Icon>
                     <ui:SymbolIcon Symbol="CheckboxChecked24" />
                 </ui:Button.Icon>
             </ui:Button>
-            <ui:Button Content="Deselecteaza tot" Command="{Binding UnMarkObjects}" FontSize="15"  Margin="10, 0, 0, 0" Background="#f3f3f3">
+            <ui:Button Content="Deselecteaza tot" Command="{Binding UnMarkObjects}" FontSize="15"  Margin="10, 0, 0, 0" Background="{StaticResource ButtonColor}">
                 <ui:Button.Icon>
                     <ui:SymbolIcon Symbol="CheckboxUnchecked24" />
                 </ui:Button.Icon>
@@ -63,14 +63,17 @@
             AutoGenerateColumns="False"
             Grid.Column="1"
             Grid.Row="2"
+            BorderThickness="4"
+            BorderBrush="Black"
             CanUserAddRows="False"
+            Background="{StaticResource ButtonColor}"
             FontSize="15"
             ItemsSource="{Binding ItemsService.CurrentObjectRecommendation}"
             SelectedItem="{Binding ItemsService.SelectedObjectToEdit}"
             HorizontalAlignment="Center"
             RowStyle="{StaticResource DefaultDataGridRowStyle}"
             >
-
+            
             <DataGrid.InputBindings>
                 <MouseBinding Gesture="LeftDoubleClick" Command="{Binding ViewObject}"/>
             </DataGrid.InputBindings>
@@ -84,6 +87,7 @@
                     MinWidth="5"
                     Width="*"
                     >
+              
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <CheckBox IsChecked="{Binding MarkObjectForRemoval, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -182,24 +186,24 @@
             </DataGrid.Columns>
         </ui:DataGrid>
 
-        <ui:Button Appearance="Light" Content="Inapoi" Command="{Binding NavigateToMenuCommand}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Background="#f3f3f3"  Width="150" Height="40"/>
+        <ui:Button Appearance="Light" Content="Inapoi" Command="{Binding NavigateToMenuCommand}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Background="{StaticResource ButtonColor}"  Width="150" Height="40"/>
 
         <Button Style="{StaticResource RoundButton}" Content="Add item" Command="{Binding AddItemCommand}" Height="100" Grid.Column="2" Grid.Row="3"/>
 
         <StackPanel  Grid.Column="1" Grid.Row="3" Height="100" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
             <!--<Button Content="Editare obiect" Command="{Binding EditObject}"  Width="200" FontSize="15"/>-->
 
-            <ui:Button Content="Propunere pentru casare" Command="{Binding CasareProposalCommand}" Visibility="{Binding ItemsService.VisibilityCasareProposal}" Background="#f3f3f3" Height="40"/>
+            <ui:Button Content="Propunere pentru casare" Command="{Binding CasareProposalCommand}" Visibility="{Binding ItemsService.VisibilityCasareProposal}" Background="{StaticResource ButtonColor}" Height="40"/>
 
-            <ui:Button Content="Casare" Command="{Binding CasareCommand}" Visibility="{Binding ItemsService.VisibilityCasare}" Background="#f3f3f3"  Width="150" Height="40"/>
+            <ui:Button Content="Casare" Command="{Binding CasareCommand}" Visibility="{Binding ItemsService.VisibilityCasare}" Background="{StaticResource ButtonColor}"  Width="150" Height="40"/>
 
-            <ui:Button Content="Creare formular" Command="{Binding CreateForm}" Visibility="{Binding ItemsService.VisibilityRevertCasare}" HorizontalAlignment="Center" Background="#f3f3f3"  Width="150" Height="40"/>
+            <ui:Button Content="Creare formular" Command="{Binding CreateForm}" Visibility="{Binding ItemsService.VisibilityRevertCasare}" HorizontalAlignment="Center" Background="{StaticResource ButtonColor}"  Width="150" Height="40"/>
 
         </StackPanel>
 
-        <ui:Button Content="Revenire la activ" Command="{Binding RevertToActiveCommand}" Visibility="{Binding ItemsService.VisibilityCasare}" Grid.Column="1" Grid.Row="3" Margin="100, 0, 0, 0" HorizontalAlignment="Right" Background="#f3f3f3" Height="40"/>
+        <ui:Button Content="Revenire la activ" Command="{Binding RevertToActiveCommand}" Visibility="{Binding ItemsService.VisibilityCasare}" Grid.Column="1" Grid.Row="3" Margin="100, 0, 0, 0" HorizontalAlignment="Right" Background="{StaticResource ButtonColor}" Height="40"/>
 
-        <ui:Button Content="Revenire la propus casare" Command="{Binding RevertToCasareProposalCommand}" Visibility="{Binding ItemsService.VisibilityRevertCasare}" Grid.Column="1" Grid.Row="3" Margin="100, 0, 0, 0" HorizontalAlignment="Right" Background="#f3f3f3" Height="40"/>
+        <ui:Button Content="Revenire la propus casare" Command="{Binding RevertToCasareProposalCommand}" Visibility="{Binding ItemsService.VisibilityRevertCasare}" Grid.Column="1" Grid.Row="3" Margin="100, 0, 0, 0" HorizontalAlignment="Right" Background="{StaticResource ButtonColor}" Height="40"/>
 
     </Grid>
 </Page>

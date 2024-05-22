@@ -16,8 +16,23 @@
                 <ui:ThemesDictionary Theme="Light" />
                 <ui:ControlsDictionary />
             </ResourceDictionary.MergedDictionaries>
-
-            <Color x:Key="BackgroundColor" A="255" R="174" G="184" B="194"/>
+            <LinearGradientBrush x:Key="BackgroundColor">
+                <LinearGradientBrush.GradientStops>
+                    <GradientStop Color="#3e5882" Offset="0"/>
+                    <GradientStop Color="#0a172b" Offset="1"/>
+                </LinearGradientBrush.GradientStops>
+            </LinearGradientBrush>
+            <SolidColorBrush x:Key="TextboxFontColor">
+                <SolidColorBrush.Color>
+                    <Color A="255" R="241" G="240" B="234" />
+                </SolidColorBrush.Color>
+            </SolidColorBrush>
+            <LinearGradientBrush x:Key="ButtonColor">
+                <LinearGradientBrush.GradientStops>
+                    <GradientStop Color="#F2F0F9" Offset="0"/>
+                    <GradientStop Color="#b6b4bf" Offset="1"/>
+                </LinearGradientBrush.GradientStops>
+            </LinearGradientBrush>
             <sys:Double x:Key="PageWidth">1640</sys:Double>
             <sys:Double x:Key="PageHeight">940</sys:Double>
             <sys:Double x:Key="MenuStackPanelWidht">300</sys:Double>

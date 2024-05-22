@@ -21,7 +21,7 @@
             <RowDefinition Height="0.3*"/>
         </Grid.RowDefinitions>
 
-        <ui:TextBlock Text="Gestiunea obiectelor electronice" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="40"/>
+        <ui:TextBlock Text="Gestiunea obiectelor electronice" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="40" Foreground="{StaticResource TextboxFontColor}"/>
 
         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Width="300">
             <ui:Button  x:Name="goToElectronicList" 
@@ -30,14 +30,14 @@
                         Height="100"
                         Command="{Binding NavigateToElectronicListCommand}"
                         HorizontalAlignment="Stretch"
-                        Background="#f3f3f3"
+                        Background="{StaticResource ButtonColor}"
                         FontSize="20"/>
             <ui:Button  x:Name="goToAddElectronic" 
                         Content="Adaugare electronice"
                         Height="100"
                         Width="Auto"
                         HorizontalAlignment="Stretch"
-                        Background="#f3f3f3"
+                        Background="{StaticResource ButtonColor}"
                         Command="{Binding NavigateToElectronicOverviewCommand}"
                         FontSize="20"/>
         </StackPanel>
