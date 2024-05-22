@@ -20,6 +20,8 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
         private INavigationService _navigation;
         public ItemsService ItemsService { get; set; }
 
+        private String[] formats = { "dd/MM/yyyy", "dd-MM-yyyy" };
+
         public INavigationService Navigation
         {
             get => _navigation;
@@ -110,7 +112,7 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
 
         public DateTime ObjectDate
         {
-            get => DateTime.ParseExact(ItemsService.ElectronicObject.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            get => DateTime.ParseExact(ItemsService.ElectronicObject.Date, formats, CultureInfo.InvariantCulture);
             set
             {
                 ItemsService.ElectronicObject.Date = value.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);

@@ -32,6 +32,7 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
 
     class ItemsService : Core.ViewModel, IItemsService
     {
+        private String[] formats = { "dd/MM/yyyy", "dd-MM-yyyy" };
         public ElectronicObjectRepository ObjectRepository { get; set; }
         public ObservableCollection<ElectronicObjectDataGridCheckBox> Items { get; set; }
 
@@ -367,7 +368,7 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
                 MessageBox.Show("Numarul de bon miscare nu poate fi necompletat.");
                 return false;
             }
-            if (ElectronicObject.Date == "" || !DateTime.TryParse(ElectronicObject.Date, out _))
+            if (ElectronicObject.Date == "" || !DateTime.TryParseExact(ElectronicObject.Date,formats,CultureInfo.InvariantCulture,DateTimeStyles.None, out _))
             {
                 MessageBox.Show("Data este invalida.");
                 return false;
@@ -406,7 +407,7 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
             if (!CheckInput())
                 return false;
 
-            ElectronicObject.Date = DateTime.Parse(ElectronicObject.Date).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+            ElectronicObject.Date = DateTime.ParseExact(ElectronicObject.Date, formats, CultureInfo.InvariantCulture).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
             ElectronicObject.Price = Double.Parse(ElectronicObject.Price).ToString();
             ObjectRepository.Add(ElectronicObject);
 
