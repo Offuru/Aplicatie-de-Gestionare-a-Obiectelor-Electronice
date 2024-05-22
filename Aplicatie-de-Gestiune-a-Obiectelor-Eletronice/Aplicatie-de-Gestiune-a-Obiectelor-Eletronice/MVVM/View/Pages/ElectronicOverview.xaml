@@ -35,23 +35,23 @@
         <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
             <ui:TextBlock Text="Tip obiect" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0, 0, 0, 10" FontSize="20"/>
             <ComboBox ItemsSource="{Binding ObjectTypesList}" SelectedItem="{Binding ItemsService.CurrentObjectType}" Width="300" Margin="0, 0, 0, 30"/>
-            <ui:TextBlock Text="{Binding ItemsService.CodeName}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="0, 0, 0, 10"/>
-            <ui:TextBox PlaceholderText="{Binding ItemsService.CodeName}" Name="CodeTBox" Text="{Binding ObjectCode}" Width="300"  Margin="0, 0, 0, 30"/>
-            <ui:TextBlock Text="{Binding ItemsService.OrderName}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="0, 0, 0, 10"/>
-            <ui:TextBox x:Name="OrderTBox" Text="{Binding ObjectOrder}" PlaceholderText="{Binding ItemsService.OrderName}" Width="300" Margin="0, 0, 0, 30"/>
+            <ui:TextBlock Text="{Binding ItemsService.CodeName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="0, 0, 0, 10"/>
+            <ui:TextBox PlaceholderText="{Binding ItemsService.CodeName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Name="CodeTBox" Text="{Binding ObjectCode}" Width="300"  Margin="0, 0, 0, 30"/>
+            <ui:TextBlock Text="{Binding ItemsService.OrderName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="0, 0, 0, 10"/>
+            <ui:TextBox x:Name="OrderTBox" Text="{Binding ObjectOrder, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" PlaceholderText="{Binding ItemsService.OrderName}" Width="300" Margin="0, 0, 0, 30"/>
             <ui:TextBlock Text="Serie unica obiect" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="0, 0, 0, 10"/>
-            <ui:TextBox Name="SerialTBox" Text="{Binding ObjectSerial}" PlaceholderText="Serie unica obiect" Width="300" Margin="0, 0, 0, 30"/>
+            <ui:TextBox Name="SerialTBox" Text="{Binding ObjectSerial, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" PlaceholderText="Serie unica obiect" Width="300" Margin="0, 0, 0, 30"/>
         </StackPanel>
 
 
         <StackPanel Grid.Column="3" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
             <ui:TextBlock Text="Numar bon miscare" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0, 0, 0, 10" FontSize="20"/>
-            <ui:TextBox Name="ReceiptNoTBox" Text="{Binding ObjectReceiptNumber}" PlaceholderText="Numar bon miscare" Width="300" Margin="0, 0, 0, 30"/>
+            <ui:TextBox Name="ReceiptNoTBox" Text="{Binding ObjectReceiptNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" PlaceholderText="Numar bon miscare" Width="300" Margin="0, 0, 0, 30"/>
             <ui:TextBlock Text="Data intrarii" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0, 0, 0, 10" FontSize="20"/>
             <!--<TextBox Name="DateTBox" Text="{Binding ObjectDate}" Style="{StaticResource placeHolder}" Tag="Data intrarii" Width="300" Height="30"  Margin="0, 0, 0, 30" FontSize="20"/>-->
-            <DatePicker HorizontalAlignment="Stretch" SelectedDate="{Binding ObjectDate}" Name="datePicker1" Width="300" Margin="0, 0, 0, 30"/>
+            <DatePicker HorizontalAlignment="Stretch" SelectedDate="{Binding ObjectDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Name="datePicker1" Width="300" Margin="0, 0, 0, 30"/>
             <ui:TextBlock Text="Denumire obiect" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0, 0, 0, 10" FontSize="20"/>
-            <ui:TextBox Name="NameTBox" Text="{Binding ObjectName}" PlaceholderText="Denumire obiect"  Width="300" Margin="0, 0, 0, 30"/>
+            <ui:TextBox Name="NameTBox" Text="{Binding ObjectName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" PlaceholderText="Denumire obiect"  Width="300" Margin="0, 0, 0, 30"/>
             <ui:TextBlock Text="Pret obiect" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0, 0, 0, 10" FontSize="20"/>
             <ui:NumberBox x:Name="PriceTBox" Text="{Binding ObjectPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" PlaceholderText="Pret obiect" Width="300" Margin="0, 0, 0, 30" SpinButtonPlacementMode="Compact"/>
         </StackPanel>

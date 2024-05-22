@@ -47,7 +47,6 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
                     _electronicObject = new ElectronicObject();
                 }
                 _electronicObject.Copy(value);
-                _electronicObject.Order = new string(_electronicObject.Order.Where(c => char.IsDigit(c)).ToArray());
                 OnPropertyChanged();
                 CurrentObjectType = _electronicObject.ActiveObjectType;
                 CurrentDestinationType = _electronicObject.Destination;
@@ -409,7 +408,7 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
 
             ElectronicObject.Date = DateTime.ParseExact(ElectronicObject.Date, formats, CultureInfo.InvariantCulture).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
             ElectronicObject.Price = Double.Parse(ElectronicObject.Price).ToString();
-            ObjectRepository.Add(ElectronicObject);
+            ObjectRepository.Add(new ElectronicObject(ElectronicObject));
 
             MessageBox.Show("Obiect salvat cu succes.");
             RefreshItems();
