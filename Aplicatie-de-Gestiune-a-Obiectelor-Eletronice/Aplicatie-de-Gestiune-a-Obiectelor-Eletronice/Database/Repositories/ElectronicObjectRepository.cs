@@ -45,16 +45,7 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Database.Repositories
                 .SingleOrDefault(e => e.Id == electronicObject.Id);
             if(result != null)
             {
-                result.Type = electronicObject.Type;
-                result.Name = electronicObject.Name;
-                result.ReceiptNumber = electronicObject.ReceiptNumber;
-                result.ActiveObjectType = electronicObject.ActiveObjectType;
-                result.Serial = electronicObject.Serial;
-                result.Order = electronicObject.Order;
-                result.Code = electronicObject.Code;
-                result.Date = electronicObject.Date;
-                result.Destination = electronicObject.Destination;
-                result.ReceiverName = electronicObject.ReceiverName;
+                result.Copy(electronicObject);
                 DbContext.SaveChanges();
 
                 return true;

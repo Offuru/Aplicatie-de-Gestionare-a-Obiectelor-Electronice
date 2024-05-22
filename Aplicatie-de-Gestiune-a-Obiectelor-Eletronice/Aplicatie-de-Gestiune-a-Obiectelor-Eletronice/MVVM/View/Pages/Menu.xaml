@@ -4,8 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.View.Pages"
-      mc:Ignorable="d" 
-      Background="{StaticResource BackgroundBrush}"
+      mc:Ignorable="d"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       d:DesignHeight="{StaticResource PageHeight}" d:DesignWidth="{StaticResource PageWidth}"
       Title="Menu">
 
@@ -21,18 +21,23 @@
             <RowDefinition Height="0.3*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Gestiunea obiectelor electronice" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="40"/>
+        <ui:TextBlock Text="Gestiunea obiectelor electronice" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="40"/>
 
         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Width="300">
-            <Button Style="{StaticResource RoundButton}" x:Name="goToElectronicList" 
+            <ui:Button  x:Name="goToElectronicList" 
                         Content="Lista electronice" 
                         Margin="0, 0, 0, 60" 
                         Height="100"
                         Command="{Binding NavigateToElectronicListCommand}"
+                        HorizontalAlignment="Stretch"
+                        Background="#f3f3f3"
                         FontSize="20"/>
-            <Button Style="{StaticResource RoundButton}" x:Name="goToAddElectronic" 
+            <ui:Button  x:Name="goToAddElectronic" 
                         Content="Adaugare electronice"
                         Height="100"
+                        Width="Auto"
+                        HorizontalAlignment="Stretch"
+                        Background="#f3f3f3"
                         Command="{Binding NavigateToElectronicOverviewCommand}"
                         FontSize="20"/>
         </StackPanel>

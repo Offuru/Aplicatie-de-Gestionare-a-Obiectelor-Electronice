@@ -4,8 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.View.Pages" xmlns:local1="clr-namespace:Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Controls"
-      mc:Ignorable="d" 
-      Background="{StaticResource BackgroundBrush}"
+      mc:Ignorable="d"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       d:DesignHeight="{StaticResource PageHeight}" d:DesignWidth="{StaticResource PageWidth}"
       Title="EletronicsList">
 
@@ -37,20 +37,28 @@
 
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1">
 
-            <TextBox Text="{Binding ItemsService.CurrentSearchInput, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource placeHolder}" Tag="Cautare..." Width="400" Height="30" FontSize="20"/>
+            <ui:TextBox Text="{Binding ItemsService.CurrentSearchInput, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="Cautare..." Width="400" Height="40" FontSize="20"/>
 
-            <ComboBox Width="180" Margin="10, 0, 0, 0" ItemsSource="{Binding ItemsService.ObjectTypeSearchFilters}" SelectedItem="{Binding ItemsService.CurrentObjectTypeSearchFilter}" FontSize="15" Height="30"/>
+            <ComboBox Width="200" Margin="10, 0, 0, 0" ItemsSource="{Binding ItemsService.ObjectTypeSearchFilters}" SelectedItem="{Binding ItemsService.CurrentObjectTypeSearchFilter}" Height="40" FontSize="15"/>
         </StackPanel >
 
         <StackPanel Visibility="{Binding ItemsService.ShowMarkForRemoval}" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1">
-            <Button Style="{StaticResource RoundButton}" Width="140" Height="30" Content="Selecteaza tot" Command="{Binding MarkObjects}" FontSize="15" />
-            <Button Style="{StaticResource RoundButton}" Width="140" Height="30" Content="Deselecteaza tot" Command="{Binding UnMarkObjects}" FontSize="15"  Margin="10, 0, 0, 0"/>
+            <ui:Button Content="Selecteaza tot" Command="{Binding MarkObjects}" FontSize="15" Background="#f3f3f3">
+                <ui:Button.Icon>
+                    <ui:SymbolIcon Symbol="CheckboxChecked24" />
+                </ui:Button.Icon>
+            </ui:Button>
+            <ui:Button Content="Deselecteaza tot" Command="{Binding UnMarkObjects}" FontSize="15"  Margin="10, 0, 0, 0" Background="#f3f3f3">
+                <ui:Button.Icon>
+                    <ui:SymbolIcon Symbol="CheckboxUnchecked24" />
+                </ui:Button.Icon>
+            </ui:Button>
         </StackPanel>
 
 
 
         <FrameworkElement x:Name="FrameWorkElementProxy" Visibility="{Binding ItemsService.ShowMarkForRemoval}"/>
-        <DataGrid
+        <ui:DataGrid
             x:Name="ElectronicOverview"
             AutoGenerateColumns="False"
             Grid.Column="1"
@@ -60,6 +68,7 @@
             ItemsSource="{Binding ItemsService.CurrentObjectRecommendation}"
             SelectedItem="{Binding ItemsService.SelectedObjectToEdit}"
             HorizontalAlignment="Center"
+            RowStyle="{StaticResource DefaultDataGridRowStyle}"
             >
 
             <DataGrid.InputBindings>
@@ -73,18 +82,18 @@
                     Visibility="{Binding DataContext.ItemsService.ShowMarkForRemoval, Source={x:Reference Name=FrameWorkElementProxy}}"
                     CanUserReorder="False"
                     MinWidth="5"
-                    Width="Auto"
+                    Width="*"
                     >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <CheckBox Style="{StaticResource LargeCheckBoxStyle}" IsChecked="{Binding MarkObjectForRemoval, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <CheckBox IsChecked="{Binding MarkObjectForRemoval, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTextColumn
                     Header="Status obiect"
                     MinWidth="5"
-                    Width="Auto"
+                    Width="*"
                     IsReadOnly="True"
                     CanUserReorder="False"
                     Binding="{Binding Type}"
@@ -92,7 +101,7 @@
                 <DataGridTextColumn
                     Header="Tip obiect"
                     MinWidth="15"
-                    Width="Auto"
+                    Width="*"
                     IsReadOnly="True"
                     CanUserReorder="False"
                     Binding="{Binding ActiveObjectType}"
@@ -100,7 +109,7 @@
                 <DataGridTextColumn
                     Header="Serie unica obiect"
                     MinWidth="15"
-                    Width="Auto"
+                    Width="*"
                     IsReadOnly="True"
                     CanUserReorder="False"
                     Binding="{Binding Serial}"
@@ -108,7 +117,7 @@
                 <DataGridTextColumn
                     Header="Cod"
                     MinWidth="15"
-                    Width="Auto"
+                    Width="*"
                     IsReadOnly="True"
                     CanUserReorder="False"
                     Binding="{Binding Code}"
@@ -116,7 +125,7 @@
                 <DataGridTextColumn
                     Header="Numar"
                     MinWidth="15"
-                    Width="Auto"
+                    Width="*"
                     IsReadOnly="True"
                     CanUserReorder="False"
                     Binding="{Binding Order}"
@@ -124,7 +133,7 @@
                 <DataGridTextColumn
                     Header="Numar bon miscare"
                     MinWidth="15"
-                    Width="Auto"
+                    Width="*"
                     IsReadOnly="True"
                     CanUserReorder="False"
                     Binding="{Binding ReceiptNumber}"
@@ -132,7 +141,7 @@
                 <DataGridTextColumn
                     Header="Data"
                     MinWidth="15"
-                    Width="Auto"
+                    Width="*"
                     IsReadOnly="True"
                     CanUserReorder="False"
                     Binding="{Binding Date}"
@@ -140,7 +149,7 @@
                 <DataGridTextColumn
                     Header="Denumire obiect"
                     MinWidth="15"
-                    Width="Auto"
+                    Width="*"
                     IsReadOnly="True"
                     CanUserReorder="False"
                     Binding="{Binding Name}"
@@ -148,7 +157,7 @@
                 <DataGridTextColumn
                     Header="Pret"
                     MinWidth="15"
-                    Width="Auto"
+                    Width="*"
                     IsReadOnly="True"
                     CanUserReorder="False"
                     Binding="{Binding Price}"
@@ -156,7 +165,7 @@
                 <DataGridTextColumn
                     Header="Tip destinatie"
                     MinWidth="15"
-                    Width="Auto"
+                    Width="*"
                     IsReadOnly="True"
                     CanUserReorder="False"
                     Binding="{Binding Destination}"
@@ -164,33 +173,33 @@
                 <DataGridTextColumn
                     Header="Nume destinatar"
                     MinWidth="15"
-                    Width="Auto"
+                    Width="*"
                     IsReadOnly="True"
                     CanUserReorder="False"
                     Binding="{Binding ReceiverName}"
                     />
 
             </DataGrid.Columns>
-        </DataGrid>
+        </ui:DataGrid>
 
-        <Button Style="{StaticResource RoundButton}" Content="Inapoi" Command="{Binding NavigateToMenuCommand}" Height="100" Width="200" Grid.Column="1" Grid.Row="3" FontSize="15" HorizontalAlignment="Left"/>
+        <ui:Button Appearance="Light" Content="Inapoi" Command="{Binding NavigateToMenuCommand}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Background="#f3f3f3"  Width="150" Height="40"/>
 
-        <Button Style="{StaticResource RoundButton}" Content="Add item" Command="{Binding AddItemCommand}" Height="100" Grid.Column="2" Grid.Row="3" FontSize="15"/>
+        <Button Style="{StaticResource RoundButton}" Content="Add item" Command="{Binding AddItemCommand}" Height="100" Grid.Column="2" Grid.Row="3"/>
 
         <StackPanel  Grid.Column="1" Grid.Row="3" Height="100" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
             <!--<Button Content="Editare obiect" Command="{Binding EditObject}"  Width="200" FontSize="15"/>-->
 
-            <Button Style="{StaticResource RoundButton}" Content="Propunere pentru casare" Command="{Binding CasareProposalCommand}" Visibility="{Binding ItemsService.VisibilityCasareProposal}" Width="200" FontSize="15"/>
+            <ui:Button Content="Propunere pentru casare" Command="{Binding CasareProposalCommand}" Visibility="{Binding ItemsService.VisibilityCasareProposal}" Background="#f3f3f3" Height="40"/>
 
-            <Button Style="{StaticResource RoundButton}" Content="Casare" Command="{Binding CasareCommand}" Visibility="{Binding ItemsService.VisibilityCasare}" Width="200" FontSize="15"/>
+            <ui:Button Content="Casare" Command="{Binding CasareCommand}" Visibility="{Binding ItemsService.VisibilityCasare}" Background="#f3f3f3"  Width="150" Height="40"/>
 
-            <Button Style="{StaticResource RoundButton}" Content="Creare formular" Command="{Binding CreateForm}" Visibility="{Binding ItemsService.VisibilityRevertCasare}" Width="200" HorizontalAlignment="Center" FontSize="15"/>
+            <ui:Button Content="Creare formular" Command="{Binding CreateForm}" Visibility="{Binding ItemsService.VisibilityRevertCasare}" HorizontalAlignment="Center" Background="#f3f3f3"  Width="150" Height="40"/>
 
         </StackPanel>
 
-        <Button Style="{StaticResource RoundButton}" Content="Revenire la activ" Command="{Binding RevertToActiveCommand}" Visibility="{Binding ItemsService.VisibilityCasare}" Grid.Column="1" Grid.Row="3" Width="200" Height="100" Margin="100, 0, 0, 0" HorizontalAlignment="Right" FontSize="15"/>
+        <ui:Button Content="Revenire la activ" Command="{Binding RevertToActiveCommand}" Visibility="{Binding ItemsService.VisibilityCasare}" Grid.Column="1" Grid.Row="3" Margin="100, 0, 0, 0" HorizontalAlignment="Right" Background="#f3f3f3" Height="40"/>
 
-        <Button Style="{StaticResource RoundButton}" Content="Revenire la propus casare" Command="{Binding RevertToCasareProposalCommand}" Visibility="{Binding ItemsService.VisibilityRevertCasare}" Grid.Column="1" Grid.Row="3" Width="200" Height="100" Margin="100, 0, 0, 0" HorizontalAlignment="Right" FontSize="15"/>
+        <ui:Button Content="Revenire la propus casare" Command="{Binding RevertToCasareProposalCommand}" Visibility="{Binding ItemsService.VisibilityRevertCasare}" Grid.Column="1" Grid.Row="3" Margin="100, 0, 0, 0" HorizontalAlignment="Right" Background="#f3f3f3" Height="40"/>
 
     </Grid>
 </Page>
