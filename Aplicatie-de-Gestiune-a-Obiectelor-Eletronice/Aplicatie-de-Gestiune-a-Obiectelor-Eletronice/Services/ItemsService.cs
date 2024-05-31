@@ -22,7 +22,7 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
 
         bool AddItem();
         void AddItems();
-        void CreateForm();
+        void CreateForm(string filename);
         void MarkItems();
         void UnMarkItems();
         void ProposeCasare();
@@ -481,7 +481,7 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
             OnPropertyChanged(nameof(CurrentObjectRecommendation));
         }
 
-        public void CreateForm()
+        public void CreateForm(string filename)
         {
             List<ElectronicObject> objects = new List<ElectronicObject>();
             foreach (var obj in Items)
@@ -496,7 +496,7 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
                 return;
             }
 
-            ObjectListToWord.CreateWordFile(objects);
+            ObjectListToWord.CreateWordFile(objects, filename);
         }
 
         public void MarkItems()

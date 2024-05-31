@@ -9,6 +9,10 @@
 		<UseWPF>true</UseWPF>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <Optimize>False</Optimize>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<Reference Include="office_dependencies">
 			<HintPath>..\office_dependencies\Microsoft.Vbe.Interop.dll</HintPath>

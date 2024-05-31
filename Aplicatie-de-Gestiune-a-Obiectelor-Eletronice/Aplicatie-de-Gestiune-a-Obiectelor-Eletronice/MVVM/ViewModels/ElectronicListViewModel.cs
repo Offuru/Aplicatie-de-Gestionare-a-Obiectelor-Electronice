@@ -54,7 +54,25 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.ViewModels
             RevertToCasareProposalCommand = new RelayCommand(o => { ItemsService.ProposeCasare(); }, o => true);
             RevertToActiveCommand = new RelayCommand(o => { ItemsService.Active(); }, o => true);
             CasareCommand = new RelayCommand(o => { ItemsService.Casare(); }, o => true);
-            CreateForm = new RelayCommand(o => { ItemsService.CreateForm(); }, obj => true);
+            CreateForm = new RelayCommand(o => {
+                Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+                dlg.FileName = "Document"; // Default file name
+                dlg.DefaultExt = ".text"; // Default file extension
+                dlg.Filter = "PDF (*.pdf)|*.pdf"; // Filter files by extension
+
+                // Show save file dialog box
+                Nullable<bool> result = dlg.ShowDialog();
+                string filename = "";
+
+                // Process save file dialog box results
+                if (result == true)
+                {
+                    // Save document
+                    filename = dlg.FileName;
+                }
+                ItemsService.CreateForm(filename);
+
+            }, obj => true);
             ViewObject = new RelayCommand(o =>
             {
                 if (ItemsService.SelectedObjectToEdit != null)

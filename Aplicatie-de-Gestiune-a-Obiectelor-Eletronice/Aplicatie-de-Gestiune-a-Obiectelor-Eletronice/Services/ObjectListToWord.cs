@@ -9,6 +9,8 @@ using Word = Microsoft.Office.Interop.Word;
 using ElectronicObject = Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Models.ElectronicObject;
 using System.Security.Cryptography;
 using System.Windows.Controls;
+using Microsoft.Office.Interop.Word;
+using System.Reflection;
 
 namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
 {
@@ -16,7 +18,7 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
     {
         private static object missing = System.Reflection.Missing.Value;
 
-        public static void CreateWordFile(List<ElectronicObject> electronicObjects)
+        public static void CreateWordFile(List<ElectronicObject> electronicObjects, string filename)
         {
             object Visible = true;
             object start1 = 0;
@@ -157,7 +159,13 @@ namespace Aplicatie_de_Gestiune_a_Obiectelor_Eletronice.Services
             range.ListFormat.RemoveNumbers();
             range.InsertAfter("F01 – PS 6.6-01/ed. 1, rev.0");
 
-            try { document.Save(); }
+
+
+            try {
+                document.ExportAsFixedFormat(filename, WdExportFormat.wdExportFormatPDF, false, WdExportOptimizeFor.wdExportOptimizeForOnScreen,
+                    WdExportRange.wdExportAllDocument, 1, 1, WdExportItem.wdExportDocumentContent, true, true,
+                    WdExportCreateBookmarks.wdExportCreateHeadingBookmarks, true, true, false, ref missing);
+            }
             catch (Exception ex) { }
         }
     }

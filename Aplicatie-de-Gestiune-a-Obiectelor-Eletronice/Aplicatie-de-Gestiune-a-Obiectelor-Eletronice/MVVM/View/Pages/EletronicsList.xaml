@@ -188,7 +188,7 @@
 
         <ui:Button Appearance="Light" Content="Inapoi" Command="{Binding NavigateToMenuCommand}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Background="{StaticResource ButtonColor}"  Width="150" Height="40"/>
 
-        <Button Style="{StaticResource RoundButton}" Content="Add item" Command="{Binding AddItemCommand}" Height="100" Grid.Column="2" Grid.Row="3"/>
+        <Button Visibility="Hidden" Style="{StaticResource RoundButton}" Content="Add item" Command="{Binding AddItemCommand}" Height="100" Grid.Column="2" Grid.Row="3"/>
 
         <StackPanel  Grid.Column="1" Grid.Row="3" Height="100" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
             <!--<Button Content="Editare obiect" Command="{Binding EditObject}"  Width="200" FontSize="15"/>-->
